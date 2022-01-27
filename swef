@@ -3,8 +3,8 @@ KERNEL=$(uname |  tr '[:upper:]' '[:lower:]' )
 KERNEL_REL=$(uname -r)
 case ${KERNEL} in
     linux)
-        OS_TYPE=$(uname -o)
-        case ${OS_TYPE,,} in
+        OS_TYPE=$(uname -o |  tr '[:upper:]' '[:lower:]' )
+        case ${OS_TYPE} in
             "gnu/linux"|"linux")
                 # OS/Distro
                 OS_NAME_CHECK=$(grep -m1 "NAME=" < /etc/os-release | grep '"') #checks if " is contenuted in the line of NAME=.
@@ -25,13 +25,13 @@ case ${KERNEL} in
                 fi
 
                 # Window Manager
-                if [[ ${XDG_SESSION_TYPE,,} == "x11" ]]
+                if [[ $(echo XDG_SESSION_TYPE |  tr '[:upper:]' '[:lower:]' ) == "x11" ]]
                 then
                     WM=$(xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2)
-                elif [[ ${XDG_SESSION_TYPE,,} == "wayland" ]]
+                elif [[ $(echo XDG_SESSION_TYPE |  tr '[:upper:]' '[:lower:]' ) == "wayland" ]]
                 then
-                    WM=$(ps -e | grep -m 1 -oi "arcan\|asc\|clayland\|dwc\|fireplace\|gnome-shell\|greenfield\|grefsen\|hikari\|kwin\|lipstick\|maynard\|mazecompositor\|motorcar\|orbital\|orbment\|perceptia\|river\|rustland\|sway\|ulubis\|velox\|wavy\|way-cooler\|wayfire\|wayhouse\|westeros\|westford\|weston\|gnome")
-                    if [[ ${WM,,} == "gnome" ]]
+                    WM=$(ps -e | grep -m 1 -oi "arcan\|asc\|clayland\|dwc\|fireplace\|gnome-shell\|greenfield\|grefsen\|hikari\|kwin\|lipstick\|maynard\|mazecompositor\|motorcar\|orbital\|orbment\|perceptia\|river\|rustland\|sway\|ulubis\|velox\|wavy\|way-cooler\|wayfire\|wayhouse\|westeros\|westford\|weston\|gnome" |  tr '[:upper:]' '[:lower:]' )
+                    if [[ ${WM} == "gnome" ]]
                     then
                         WM="Mutter"
                     fi
