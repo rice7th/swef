@@ -18,12 +18,12 @@ SWEF (Should Work Everywhere Fetch) is a minimal, fast and generic fetching prog
 use make:
 
 Linux
-```
+```sh
 sudo make install #installs
 sudo make uninstall #uninstalls
 ```
 MacOS
-```
+```sh
 sudo make installmacos #installs
 sudo make uninstall #uninstalls
 ```
