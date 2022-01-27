@@ -34,4 +34,5 @@ MacOS
 sudo make installmacos #installs
 sudo make uninstall #uninstalls
 ```
-Android (soon)
+Android
+You can git-clone the repo, change the file permissions with `chmod +x /directory/to/swef` and run it with `bash /directory/to/swef`, where `/directory/to/swef` is the directory to the script. Make should work too, tho android didn't seem to like installing executable files..
