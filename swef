@@ -6,7 +6,7 @@ case ${KERNEL,,} in
     linux)
         OS_TYPE=$(uname -o)
         case ${OS_TYPE,,} in
-            "gnu/linux")
+            "gnu/linux"|"linux")
                 # OS/Distro
                 OS_NAME_CHECK=$(grep -m1 "NAME=" < /etc/os-release | grep '"') #checks if " is contenuted in the line of NAME=.
                 if [[ -z "$OS_NAME_CHECK" ]]
