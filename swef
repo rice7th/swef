@@ -1,8 +1,7 @@
-#!/usr/bin/env bash
-KERNEL=$(uname)
+#!/usr/bin/env sh
+KERNEL=$(uname |  tr '[:upper:]' '[:lower:]' )
 KERNEL_REL=$(uname -r)
-SHELL_NAME=$(cat /proc/$$/comm) # how does this even work
-case ${KERNEL,,} in
+case ${KERNEL} in
     linux)
         OS_TYPE=$(uname -o)
         case ${OS_TYPE,,} in
@@ -21,6 +20,8 @@ case ${KERNEL,,} in
                 if [[ ! -d "/proc/" ]]
                 then
                     SHELL_NAME=$SHELL
+                else
+                    SHELL_NAME=$(cat /proc/$$/comm) # how does this even work
                 fi
 
                 # Window Manager
@@ -56,19 +57,19 @@ case ${KERNEL,,} in
                     -e "[y]abai" \
                     -e "[R]ectangle")
         case $WM in
-            *chunkwm*)   wm=chunkwm ;;
-            *kwm*)       wm=Kwm ;;
-            *yabai*)     wm=yabai ;;
-            *Amethyst*)  wm=Amethyst ;;
-            *Spectacle*) wm=Spectacle ;;
-            *Rectangle*) wm=Rectangle ;;
-            *)           wm="Quartz Compositor" ;;
+            *chunkwm*)   WM=chunkwm ;;
+            *kwm*)       WM=Kwm ;;
+            *yabai*)     WM=yabai ;;
+            *Amethyst*)  WM=Amethyst ;;
+            *Spectacle*) WM=Spectacle ;;
+            *Rectangle*) WM=Rectangle ;;
+            *)           WM="Quartz Compositor" ;;
         esac
-        SHELL_NAME=$SHELL
+        SHELL_NAME=${SHELL:5}
 
-        ;;
+
+    ;;
 esac
-
 printf "Os: ${OS}\n"
 printf "Wm: ${WM}\n"
 printf "Sh: ${SHELL_NAME}\n"
