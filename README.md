@@ -13,3 +13,18 @@ SWEF (Should Work Everywhere Fetch) is a minimal, fast and generic fetching prog
 - [ ] Uptime;
 - [ ] Graphic session;
 - [ ] User fetch (hostname, nodename, things that the user sets on its own like messages, quotes, etc.)
+
+## Installation
+use make:
+
+Linux
+```
+sudo make install #installs
+sudo make uninstall #uninstalls
+```
+MacOS
+```
+sudo make installmacos #installs
+sudo make uninstall #uninstalls
+```
+Android (soon)
