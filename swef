@@ -25,10 +25,10 @@ case ${KERNEL} in
                 fi
 
                 # Window Manager
-                if [[ $(echo XDG_SESSION_TYPE |  tr '[:upper:]' '[:lower:]' ) == "x11" ]]
+                if [[ $(echo $XDG_SESSION_TYPE |  tr '[:upper:]' '[:lower:]' ) == "x11" ]]
                 then
                     WM=$(xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2)
-                elif [[ $(echo XDG_SESSION_TYPE |  tr '[:upper:]' '[:lower:]' ) == "wayland" ]]
+                elif [[ $(echo $XDG_SESSION_TYPE |  tr '[:upper:]' '[:lower:]' ) == "wayland" ]]
                 then
                     WM=$(ps -e | grep -m 1 -oi "arcan\|asc\|clayland\|dwc\|fireplace\|gnome-shell\|greenfield\|grefsen\|hikari\|kwin\|lipstick\|maynard\|mazecompositor\|motorcar\|orbital\|orbment\|perceptia\|river\|rustland\|sway\|ulubis\|velox\|wavy\|way-cooler\|wayfire\|wayhouse\|westeros\|westford\|weston\|gnome" |  tr '[:upper:]' '[:lower:]' )
                     if [[ ${WM} == "gnome" ]]
