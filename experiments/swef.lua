@@ -79,8 +79,9 @@ function distro()
     local distro_command = io.open("/etc/os-release", "r")
     local distro_temp = distro_command:read("*a")
     distro_command:close()
-    local distro = onlymatch(distro_temp, "%A+%a+")
-    distro = onlymatch(distro, "%a+")
+    local distro = onlymatch(distro_temp, "[^PRETTY_]NAME%C+")
+    distro = distro:gsub('"', '')
+    distro = distro:gsub('NAME=', '')
     return distro
 end
 
