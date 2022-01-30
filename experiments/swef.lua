@@ -49,18 +49,23 @@ end
 
 function linux_wm()
     local graphic_session = os.getenv("XDG_SESSION_TYPE")
-    if string.lower(graphic_session) == "x11" then
-        return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
-    elseif string.lower(graphic_session) == "wayland" then
-        wm = opencmd('ps -e | grep -m 1 -oi "arcan\\|asc\\|clayland\\|dwc\\|fireplace\\|gnome-shell\\|greenfield\\|grefsen\\|hikari\\|kwin\\|lipstick\\|maynard\\|mazecompositor\\|motorcar\\|orbital\\|orbment\\|perceptia\\|river\\|rustland\\|sway\\|ulubis\\|velox\\|wavy\\|way-cooler\\|wayfire\\|wayhouse\\|westeros\\|westford\\|weston\\|gnome"')
-        if wm == "gnome" then
-            return "mutter"
+    if not graphic_session then -- checks if graphic_session is nil. if it is, then its considered false, but if the condition is false, then the if statement passes to the next condition. So, if not graphic_session (is true, not nil) 
+        if string.lower(graphic_session) == "x11" then
+            return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
+        elseif string.lower(graphic_session) == "wayland" then
+            wm = opencmd('ps -e | grep -m 1 -oi "arcan\\|asc\\|clayland\\|dwc\\|fireplace\\|gnome-shell\\|greenfield\\|grefsen\\|hikari\\|kwin\\|lipstick\\|maynard\\|mazecompositor\\|motorcar\\|orbital\\|orbment\\|perceptia\\|river\\|rustland\\|sway\\|ulubis\\|velox\\|wavy\\|way-cooler\\|wayfire\\|wayhouse\\|westeros\\|westford\\|weston\\|gnome"')
+            if wm == "gnome" then
+                return "mutter"
+            else
+                return wm
+            end
         else
+            wm = "unknown"
             return wm
         end
     else
-        graphic_session = "tty"
-        wm = "none"
+        -- Graphic session is TTY
+        wm = "tty"
         return wm
     end
 end
