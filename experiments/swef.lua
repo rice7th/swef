@@ -15,7 +15,7 @@ function isdir(path)
     return exists(path.."/")
 end
 
-function onlymatch(s, p) -- substitute pattern
+function onlymatch(s, p) -- grab only the match of the pattern
     return string.sub(s, string.find(s, p))
 end
 
@@ -79,9 +79,7 @@ function distro()
     local distro_command = io.open("/etc/os-release", "r")
     local distro_temp = distro_command:read("*a")
     distro_command:close()
-    local distro = onlymatch(distro_temp, "[^PRETTY_]NAME%C+")
-    distro = distro:gsub('"', '')
-    distro = distro:gsub('NAME=', '')
+    local distro = distro_temp:match("NAME.%W?%w+", 1):gsub('"', ''):gsub('NAME=', '')
     return distro
 end
 
