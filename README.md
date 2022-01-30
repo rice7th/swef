@@ -37,3 +37,14 @@ sudo make uninstall #uninstalls
 ```
 Android
 You can git-clone the repo, change the file permissions with `chmod +x /directory/to/swef` and run it with `bash /directory/to/swef`, where `/directory/to/swef` is the directory to the script. Make should work too, tho android didn't seem to like installing executable files..
+
+# Swef LUA \[WIP\]
+Swef LUA is swef but written in lua, with support for MacOS, Linux, Android and even Windows!
+Currently WIP (Work in progress), has some advantages:
+- [x] Speed. Faster than shell script, and even faster with LuaJIT
+- [x] Can work natively on windows, not only WSL or Cygwin.
+- [x] Compatibility. The Lua interpreter is written in ansi C, meaning that you can compile the whole language where you want, regardless of the architecture.
+- [x] Dependencies. Just one: Lua. (or LuaJIT). Lua itself (with its standard library) weights only ~1 Mb. Very lightweight!
+if you encounter a problem please submit a Gihub issue.
+
+Thanks for using SWEF.
