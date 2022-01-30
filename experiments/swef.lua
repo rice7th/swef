@@ -104,7 +104,7 @@ function fetch()
                 }
                 return fetch
 
-            elseif string.lower(linux_os) == "gnu/linux" then
+            elseif string.lower(linux_os) == "gnu/linux" or "linux" then
                 local fetch = {
                     os = distro(),
                     wm = linux_wm(),
