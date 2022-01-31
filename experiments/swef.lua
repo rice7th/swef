@@ -59,7 +59,7 @@ function linux_wm()
                 "clayland",
                 "dwc",
                 "fireplace",
-                "gnome-shell",
+                "gnome%-shell",
                 "greenfield",
                 "grefsen",
                 "hikari",
@@ -76,7 +76,7 @@ function linux_wm()
                 "ulubis",
                 "velox",
                 "wavy",
-                "way-cooler"
+                "way%-cooler"
                 "wayfire",
                 "wayhouse",
                 "westeros",
@@ -86,9 +86,14 @@ function linux_wm()
             for i=1,#wayland_wm_list,1 do
                 wm = wm_pids:match(wayland_wm_list[i])
                 if wm ~= nil then
-                    return wm
+                    if wm == "gnome-shell" then
+                        return "mutter"
+                    else
+                        return wm
+                    end
                 end
             end
+            if wm == nil then return os.getenv("WAYLAND_DISPLAY") end
         else
             wm = "unknown"
             return wm
