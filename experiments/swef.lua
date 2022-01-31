@@ -292,7 +292,7 @@ function ascii()
     elseif string.lower(info.os):match("alpine") then
         local ascii = {
             l1 = " /¯¯¯¯¯¯\\    ",
-            l2 = "/  /\/\\  \\   ",
+            l2 = "/  /\\/\\  \\   ",
             l3 = "\\ /  \\ \\ /   ",
             l4 = " \\______/    "
         }
