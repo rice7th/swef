@@ -50,11 +50,44 @@ function linux_wm()
         if string.lower(graphic_session) == "x11" then
             return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
         elseif string.lower(graphic_session) == "wayland" then
-            wm = opencmd('ps -e | grep -m 1 -oi "arcan\\|asc\\|clayland\\|dwc\\|fireplace\\|gnome-shell\\|greenfield\\|grefsen\\|hikari\\|kwin\\|lipstick\\|maynard\\|mazecompositor\\|motorcar\\|orbital\\|orbment\\|perceptia\\|river\\|rustland\\|sway\\|ulubis\\|velox\\|wavy\\|way-cooler\\|wayfire\\|wayhouse\\|westeros\\|westford\\|weston\\|gnome"')
-            if wm == "gnome" then
-                return "mutter"
-            else
-                return wm
+            local wm_pid_command = io.popen("ps -e")
+            local wm_pids = string.lower(wm_pid_command:read("*a"))
+            wm_pid_command:close()
+            local wayland_wm_list = {
+                "arcan",
+                "asc",
+                "clayland",
+                "dwc",
+                "fireplace",
+                "gnome-shell",
+                "greenfield",
+                "grefsen",
+                "hikari",
+                "kwin",
+                "lipstick",
+                "maynard",
+                "mazecompositor",
+                "motorcar",
+                "orbital",
+                "orbment",
+                "perceptia",
+                "river",
+                "sway",
+                "ulubis",
+                "velox",
+                "wavy",
+                "way-cooler"
+                "wayfire",
+                "wayhouse",
+                "westeros",
+                "westford",
+                "weston"
+            }
+            for i=1,#wayland_wm_list,1 do
+                wm = wm_pids:match(wayland_wm_list[i])
+                if wm ~= nil then
+                    return wm
+                end
             end
         else
             wm = "unknown"
