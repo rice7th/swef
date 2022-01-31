@@ -15,16 +15,13 @@ function isdir(path)
     return exists(path.."/")
 end
 
-function onlymatch(s, p) -- grab only the match of the pattern
-    return string.sub(s, string.find(s, p))
-end
 
 
 function opencmd(cmd)
     local command = io.popen(cmd, "r")
     local command_output = command:read("*a")
     command:close()
-    command_output = onlymatch(command_output, "%C+")
+    command_output = command_output:match("%C+")
     return command_output
 end
 
@@ -70,14 +67,54 @@ function linux_wm()
     end
 end
 
+
 function macos_wm()
-    return opencmd([[ps -e | grep -o \
-    -e "[S]pectacle" \
-    -e "[A]methyst" \
-    -e "[k]wm" \
-    -e "[c]hun[k]wm" \
-    -e "[y]abai" \
-    -e "[R]ectangle"]])
+    local wm_pid_command = io.popen("ps -e")
+    local wm_pids = string.lower(wm_pid_command:read("*a"))
+    wm_pid_command:close()
+    local windows_wm_list = {
+        "spectacle",
+        "amethyst",
+        "kwm",
+        "chunkwm",
+        "yabai",
+        "rectangle"
+    }
+    for i=1,#windows_wm_list,1 do
+        wm = wm_pids:match(windows_wm_list[i])
+        if wm ~= nil then
+            return wm
+        end
+    end
+    if wm == nil then
+        return "Quartz Compositor"
+    end
+end
+
+function windows_wm()
+    local wm_pid_command = io.popen("tasklist")
+    local wm_pids = string.lower(wm_pid_command:read("*a"))
+    wm_pid_command:close()
+    local windows_wm_list = {
+        "bugn",
+        "windawesome",
+        "blackbox",
+        "emerge",
+        "litestep",
+        "explorer"
+    }
+    for i=1,#windows_wm_list,1 do
+        wm = wm_pids:match(windows_wm_list[i])
+        if wm ~= nil then
+            return wm
+        end
+    end
+end
+
+function windows_version()
+    local windows_ver = opencmd("wmic os get Caption /value")
+    windows_ver = windows_ver:gsub("Caption=", '')
+    return windows_ver
 end
 
 function distro()
@@ -134,6 +171,14 @@ function fetch()
                 sh = shell()
             }
             return fetch
+        elseif string.lower(kern):match("MINGW64") == "mingw64" then
+            local fetch = {
+                os = "Windows (mingw)",
+                wm = windows_wm(),
+                kn = "mingw64",
+                sh = shell()
+            }
+            return fetch
         else
             local fetch = {
                 os = "Maybe BSD or Minix, this is still in WIP",
@@ -143,12 +188,13 @@ function fetch()
             }
             return fetch
         end
+    --[[ WINDOWS ]]
     elseif os_type == "windows" then
         local fetch = {
-            os = "windows [WIP]",
-            wm = "explorer",
+            os = windows_version(),
+            wm = windows_wm(),
             kn = "DOS",
-            sh = "cmd.exe"
+            sh = "powershell"
         }
         return fetch
     else
@@ -161,9 +207,72 @@ function fetch()
         return fetch
     end
 end
+--[[ INITIALIZZATION ]]
+local info = fetch()
 
-info = fetch()
-io.write("os: " .. info.os .. "\n")
-io.write("wm: " .. info.wm .. "\n")
-io.write("kn: " .. info.kn .. "\n")
-io.write("sh: " .. info.sh .. "\n")
+function ascii()
+    if string.lower(info.os):match("ubuntu") then
+        local ascii = {
+            l1 = "  /-'-( )    ",
+            l2 = "( )    |     ",
+            l3 = "  \\-.-( )    ",
+            l4 = "             "
+        }
+        return ascii
+    elseif string.lower(info.os):match("arch") then
+        local ascii = {
+            l1 = "   /\\        ",
+            l2 = "  /\\ \\       ",
+            l3 = " / .. \\      ",
+            l4 = "/.'  '.\\     "
+        }
+        return ascii
+    elseif string.lower(info.os):match("gentoo") then
+        local ascii = {
+            l1 = " ,--.        ",
+            l2 = "( () \\       ",
+            l3 = " `^  /       ",
+            l4 = "  '~'        "
+        }
+        return ascii
+    elseif string.lower(info.os):match("fedora") then
+        local ascii = {
+            l1 = "   /¯¯\\      ",
+            l2 = " __|__       ",
+            l3 = "/  T         ",
+            l4 = "\\__/         "
+        }
+        return ascii
+    elseif string.lower(info.os):match("debian") then
+        local ascii = {
+            l1 = "    _.._     ",
+            l2 = "   (    |    ",
+            l3 = "   | (_/     ",
+            l4 = "    \\        "
+        }
+        return ascii
+    elseif string.lower(info.os):match("windows") then
+        local ascii = {
+            l1 = '|"""---....  ',
+            l2 = '|____|____|  ',
+            l3 = '|    T    |  ',
+            l4 = '|...---"""\'  '
+        }
+        return ascii
+    else -- AKA unknown
+        local ascii = {
+            l1 = "  /'._         ",
+            l2 = " (° o 7        ",
+            l3 = "  |'-'\"~.  .   ",
+            l4 = "  Uu^~C_J._.\"  "
+        }
+        return ascii
+    end
+end
+-- info.os = "debian"
+art = ascii()
+
+io.write(art.l1 .. "os: " .. info.os .. "\n")
+io.write(art.l2 .. "wm: " .. info.wm .. "\n")
+io.write(art.l3 .. "kn: " .. info.kn .. "\n")
+io.write(art.l4 .. "sh: " .. info.sh .. "\n")
