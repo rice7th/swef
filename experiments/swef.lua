@@ -231,7 +231,7 @@ function fetch()
         local fetch = {
             os = windows_version(),
             wm = windows_wm(),
-            kn = "DOS",
+            kn = "NT",
             sh = "powershell"
         }
         return fetch
