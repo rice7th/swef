@@ -76,7 +76,7 @@ function linux_wm()
                 "ulubis",
                 "velox",
                 "wavy",
-                "way%-cooler"
+                "way%-cooler",
                 "wayfire",
                 "wayhouse",
                 "westeros",
