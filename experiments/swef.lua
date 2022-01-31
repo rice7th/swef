@@ -289,6 +289,14 @@ function ascii()
             l4 = "    \\        "
         }
         return ascii
+    elseif string.lower(info.os):match("alpine") then
+        local ascii = {
+            l1 = " /¯¯¯¯¯¯\  ",
+            l2 = "/  /\/\  \  ",
+            l3 = "\ /  \ \ / ",
+            l4 = " \______/   "
+        }
+        return ascii
     elseif string.lower(info.os):match("windows") then
         local ascii = {
             l1 = '|"""---....  ',
