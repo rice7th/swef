@@ -49,14 +49,8 @@ local NOCOL = "\x1b[0m"
 -- Checks if a file exist
 local function exists(file)
     local ok, err, code = os.rename(file, file)
-        if not ok then
-            if code == 13 then
-                return true
-            end
-        end
-        return ok --, err
+    return ok or code == 13, err
 end
-    
 
 local function isdir(path)
     return exists(path.."/")
@@ -83,7 +77,7 @@ local function os_family()
 end
 
 local function shell()
-    does_proc_exist = isdir("/proc")
+    local does_proc_exist = isdir("/proc")
     if does_proc_exist then
         return opencmd("cat /proc/$$/comm")
     else
@@ -93,12 +87,12 @@ end
 
 local function linux_wm()
     local graphic_session = os.getenv("XDG_SESSION_TYPE")
-    if graphic_session ~= nil then
-        if string.lower(graphic_session) == "x11" then
+    if graphic_session then
+        if graphic_session:lower() == "x11" then
             return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
-        elseif string.lower(graphic_session) == "wayland" then
+        elseif graphic_session:lower() == "wayland" then
             local wm_pid_command = io.popen("ps -e")
-            local wm_pids = string.lower(wm_pid_command:read("*a"))
+            local wm_pids = wm_pid_command:read("*a"):lower()
             wm_pid_command:close()
             local wayland_wm_list = {
                 "arcan",
@@ -130,34 +124,32 @@ local function linux_wm()
                 "westford",
                 "weston"
             }
-            for i=1,#wayland_wm_list,1 do
-                wm = wm_pids:match(wayland_wm_list[i])
-                if wm ~= nil then
-                    if wm == "gnome-shell" then
-                        return "mutter"
-                    else
-                        return wm
-                    end
+            for i=1,#wayland_wm_list do
+                if wm_pids:find(wayland_wm_list[i]) then
+                    wm = wayland_wm_list[i]
+                    break
                 end
             end
-            if wm == nil then return os.getenv("WAYLAND_DISPLAY") end
+            if wm == "gnome-shell" then
+                return "mutter"
+            else
+                return wm or os.getenv("WAYLAND_DISPLAY") or error(":v")
+            end
         else
-            wm = "unknown"
-            return wm
+            return "unknown"
         end
     else
         -- Graphic session is TTY
-        wm = "tty"
-        return wm
+        return "tty"
     end
 end
 
 
 local function macos_wm()
     local wm_pid_command = io.popen("ps -e")
-    local wm_pids = string.lower(wm_pid_command:read("*a"))
+    local wm_pids = wm_pid_command:read("*a"):lower()
     wm_pid_command:close()
-    local windows_wm_list = {
+    local macos_wm_list = {
         "spectacle",
         "amethyst",
         "kwm",
@@ -165,20 +157,18 @@ local function macos_wm()
         "yabai",
         "rectangle"
     }
-    for i=1,#windows_wm_list,1 do
-        wm = wm_pids:match(windows_wm_list[i])
-        if wm ~= nil then
-            return wm
+    for i=1,#macos_wm_list do
+        if wm_pids:find(macos_wm_list[i]) then
+            wm = macos_wm_list[i]
+            break
         end
     end
-    if wm == nil then
-        return "Quartz Compositor"
-    end
+    return wm or "Quartz Compositor" or error("WTF")
 end
 
 local function windows_wm()
     local wm_pid_command = io.popen("tasklist")
-    local wm_pids = string.lower(wm_pid_command:read("*a"))
+    local wm_pids = wm_pid_command:read("*a"):lower()
     wm_pid_command:close()
     local windows_wm_list = {
         "bugn",
@@ -188,12 +178,13 @@ local function windows_wm()
         "litestep",
         "explorer"
     }
-    for i=1,#windows_wm_list,1 do
-        wm = wm_pids:match(windows_wm_list[i])
-        if wm ~= nil then
-            return wm
+    for i=1,#windows_wm_list do
+        if wm_pids:find(windows_wm_list[i]) then
+            wm = windows_wm_list[i]
+            break
         end
     end
+    return wm or error("HOW")
 end
 
 local function windows_version()
@@ -219,10 +210,11 @@ local function fetch()
         -- Get Kernel release
         kern_release = opencmd("uname -r")
 
+        -- Get OS Name (not distro!)
+        os_name = opencmd("uname -o")
         -- Check if the kernel is linux, macos, bsd or other
-        if string.lower(kern) == "linux" then
-            linux_os = opencmd("uname -o")
-            if string.lower(linux_os) == "android" then
+        if kern:lower() == "linux" then
+            if os_name:lower() == "android" then
                 local fetch = {
                     os = "Android",
                     wm = "AndroidWM",
@@ -231,7 +223,7 @@ local function fetch()
                 }
                 return fetch
 
-            elseif string.lower(linux_os) == "gnu/linux" or "linux" then
+            elseif os_name:lower() == "gnu/linux" or "linux" then
                 local fetch = {
                     os = distro(),
                     wm = linux_wm(),
@@ -248,7 +240,7 @@ local function fetch()
                 }
                 return fetch
             end
-        elseif string.lower(kern) == "darwin" then
+        elseif kern:lower() == "darwin" then
             local fetch = {
                 os = "Mac Os",
                 wm = macos_wm(),
@@ -256,7 +248,7 @@ local function fetch()
                 sh = shell()
             }
             return fetch
-        elseif string.lower(kern):match("MINGW64") == "mingw64" then
+        elseif kern:lower():find("mingw64") then
             local fetch = {
                 os = "Windows (mingw)",
                 wm = windows_wm(),
@@ -264,9 +256,17 @@ local function fetch()
                 sh = shell()
             }
             return fetch
+        elseif kern:lower():find("BSD") then
+            local fetch = {
+                os = os_name,
+                wm = "WIP",
+                kn = kern .. kern_release,
+                sh = opencmd("basename $SHELL")
+            }
+            return fetch
         else
             local fetch = {
-                os = "Maybe BSD or Minix, this is still in WIP",
+                os = "Maybe or Minix, this is still in WIP",
                 wm = "¯\\_(ツ)_/¯",
                 kn = "¯\\_(ツ)_/¯",
                 sh = "¯\\_(ツ)_/¯"
@@ -296,203 +296,158 @@ end
 
 
 
-local function ascii(info, use_color) -- Boolean
-    if use_color then
-        if string.lower(info.os):match("ubuntu") then
+local function ascii(info)
+    if string.lower(info.os):find("ubuntu") then
+        local ascii = {
+            l1 = YELLOW .. "  /-".. B_RED .."'-" .. RED .. "( )       " .. NOCOL,
+            l2 = B_RED .. "( )    |        " .. NOCOL,
+            l3 = YELLOW .. "  \\-".. RED ..".-".. YELLOW .."( )       " .. NOCOL,
+            l4 = NOCOL .. "                " .. NOCOL
+        }
+        --   /-'-( )       
+        -- ( )    |        
+        --   \-.-( )       
+        --
+        return ascii
+    elseif string.lower(info.os):find("arch") then
+        local ascii = {
+            l1 = CYAN .. "   /\\           " .. NOCOL,
+            l2 = CYAN .. "  /\\ \\          " .. NOCOL,
+            l3 = CYAN .. " / .. \\         " .. NOCOL,
+            l4 = CYAN .. "/.'  '.\\        " .. NOCOL
+        }
+        --    /\     
+        --   /  \  
+        --  / .. \ 
+        -- /.'  '.\
+        return ascii
+    elseif string.lower(info.os):find("gentoo") then
+        local ascii = {
+            l1 = B_GRAY .. " ,--.           " .. NOCOL,
+            l2 = B_GRAY .. "( () \\          " .. NOCOL,
+            l3 = B_GRAY .. " `^  /          " .. NOCOL,
+            l4 = B_GRAY .. "  '~'           " .. NOCOL
+        }
+        --  ,--.           
+        -- ( () \          
+        --  `^  /          
+        --   '~'           
+        return ascii
+    elseif string.lower(info.os):find("fedora") then
+        local ascii = {
+            l1 = BLUE .. "   /¯¯\\         " .. NOCOL,
+            l2 = BLUE .. " __|__          " .. NOCOL,
+            l3 = BLUE .. "/  T            " .. NOCOL,
+            l4 = BLUE .. "\\__/            " .. NOCOL
+        }
+        --    /¯¯\        
+        --  __|__          
+        -- /  T            
+        -- \__/           
+        return ascii
+    elseif string.lower(info.os):find("debian") then
+        local ascii = {
+            l1 = RED .. "  _.._        " .. NOCOL,
+            l2 = RED .. " (    |       " .. NOCOL,
+            l3 = RED .. " | (_/        " .. NOCOL,
+            l4 = RED .. "  \\           " .. NOCOL
+        }
+        --  _.._        
+        -- (    |       
+        -- | (_/        
+        --  \          
+        return ascii
+    elseif string.lower(info.os):find("alpine") then
+        local ascii = {
+            l1 = BLUE .. " /¯¯¯¯¯¯\\       " .. NOCOL,
+            l2 = BLUE .. "/  " .. WHITE .. "/\\/\\" .. BLUE .. "  \\      " .. NOCOL,
+            l3 = BLUE .. "\\ " .. WHITE .. "/  \\ \\" .. BLUE .. " /      " .. NOCOL,
+            l4 = BLUE .. " \\______/       " .. NOCOL
+        }
+        --  /¯¯¯¯¯¯\
+        -- /  /\/\  \      
+        -- \ /  \ \ /
+        --  \______/
+        return ascii
+    
+    elseif string.lower(info.os):find("windows") then
+        local ascii = {
+            l1 = '|"""---....     ',
+            l2 = '|____|____|     ',
+            l3 = '|    T    |     ',
+            l4 = '|...---"""\'     '
+        }
+        --|"""---....     
+        --|____|____|     
+        --|    T    |     
+        --|...---"""''    
+        return ascii
+    elseif string.lower(info.os):find("mac os") then
+        local ascii = {
+            l1 = RED .. '  __()_         ' .. NOCOL,
+            l2 = YELLOW .. ".'     '.       " .. NOCOL,
+            l3 = GREEN .. '|      (        ' .. NOCOL,
+            l4 = CYAN .. "'._____.'       " .. NOCOL
+        }
+        --   __()_        
+        -- .'     '.      
+        -- |      (       
+        -- '._____.'      
+        return ascii
+    elseif string.lower(info.os):find("android") then
+        local ascii = {
+            l1 = GREEN .. '  \\  _  /     ' .. NOCOL,
+            l2 = GREEN .. ' .-"" ""-.    ' .. NOCOL,
+            l3 = GREEN .. '/  O   O  \\   ' .. NOCOL,
+            l4 = GREEN .. '|_________|   ' .. NOCOL
+        }
+        --   \  _  /    
+        --  .-"" ""-.    
+        -- /  O   O  \
+        -- |_________|   
+        return ascii
+    else -- AKA unknown
+        randomness = math.random()
+        if randomness >= 0 and randomness <= 0.25 then -- Orange Cat
             local ascii = {
-                l1 = YELLOW .. "  /-".. B_RED .."'-" .. RED .. "( )       " .. NOCOL,
-                l2 = B_RED .. "( )    |        " .. NOCOL,
-                l3 = YELLOW .. "  \\-".. RED ..".-".. YELLOW .."( )       " .. NOCOL,
-                l4 = NOCOL .. "                " .. NOCOL
+                l1 = B_RED .. "  /'._         " .. NOCOL,
+                l2 = B_RED .. " (" .. B_GREEN .. "° o" .. B_RED .. " 7        " .. NOCOL,
+                l3 = B_RED .. "  " ..YELLOW.. "|" .. B_RED .. "'-'".. YELLOW .."\"~.  .   " .. NOCOL,
+                l4 = B_RED .. "  Uu" .. YELLOW .. "^~" .. B_RED .. "C_J._.\"  " .. NOCOL
             }
             return ascii
-        elseif string.lower(info.os):match("arch") then
+        elseif randomness >= 0.25 and randomness <= 0.5 then -- Black Cat
             local ascii = {
-                l1 = CYAN .. "   /\\           " .. NOCOL,
-                l2 = CYAN .. "  /\\ \\          " .. NOCOL,
-                l3 = CYAN .. " / .. \\         " .. NOCOL,
-                l4 = CYAN .. "/.'  '.\\        " .. NOCOL
+                l1 = BLACK .. "  /'._         " .. NOCOL,
+                l2 = BLACK .. " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
+                l3 = BLACK .. "  |'-'\"~.  .   " .. NOCOL,
+                l4 = BLACK .. "  Uu^~C_J._.\"  " .. NOCOL
             }
             return ascii
-        elseif string.lower(info.os):match("gentoo") then
+        elseif randomness >= 0.5 and randomness <= 0.75 then -- Calico Cat
             local ascii = {
-                l1 = B_GRAY .. " ,--.           " .. NOCOL,
-                l2 = B_GRAY .. "( () \\          " .. NOCOL,
-                l3 = B_GRAY .. " `^  /          " .. NOCOL,
-                l4 = B_GRAY .. "  '~'           " .. NOCOL
+                l1 = B_RED .. "  /'." .. BLACK .. "_         " .. NOCOL,
+                l2 = " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
+                l3 = "  " .. BLACK .. "|".. WHITE .."'-'\"".. B_RED .."~.  .   " .. NOCOL,
+                l4 = "  " .. BLACK .. "U" .. WHITE .. "u^" .. B_RED .. "~C_J" .. WHITE .. "._.\"  " .. NOCOL
             }
             return ascii
-        elseif string.lower(info.os):match("fedora") then
+        else -- if you get more than 0.75 you unlock my cat (his name is Sun and he's a tabby cat)
             local ascii = {
-                l1 = BLUE .. "   /¯¯\\         " .. NOCOL,
-                l2 = BLUE .. " __|__          " .. NOCOL,
-                l3 = BLUE .. "/  T            " .. NOCOL,
-                l4 = BLUE .. "\\__/            " .. NOCOL
-            }
-            return ascii
-        elseif string.lower(info.os):match("debian") then
-            local ascii = {
-                l1 = RED .. "    _.._        " .. NOCOL,
-                l2 = RED .. "   (    |       " .. NOCOL,
-                l3 = RED .. "   | (_/        " .. NOCOL,
-                l4 = RED .. "    \\           " .. NOCOL
-            }
-            return ascii
-        elseif string.lower(info.os):match("alpine") then
-            local ascii = {
-                l1 = BLUE .. " /¯¯¯¯¯¯\\       " .. NOCOL,
-                l2 = BLUE .. "/  " .. WHITE .. "/\\/\\" .. BLUE .. "  \\      " .. NOCOL,
-                l3 = BLUE .. "\\ " .. WHITE .. "/  \\ \\" .. BLUE .. " /      " .. NOCOL,
-                l4 = BLUE .. " \\______/       " .. NOCOL
-            }
-            return ascii
-        
-        elseif string.lower(info.os):match("windows") then
-            local ascii = {
-                l1 = '|"""---....     ',
-                l2 = '|____|____|     ',
-                l3 = '|    T    |     ',
-                l4 = '|...---"""\'     '
-            }
-            return ascii
-        elseif string.lower(info.os):match("mac os") then
-            local ascii = {
-                l1 = RED .. '  __()_         ' .. NOCOL,
-                l2 = YELLOW .. ".'     '.       " .. NOCOL,
-                l3 = GREEN .. '|      (        ' .. NOCOL,
-                l4 = CYAN .. "'._____.'       " .. NOCOL
-            }
-            return ascii
-        elseif string.lower(info.os):match("android") then
-            local ascii = {
-                l1 = GREEN .. '  \\  _  /     ' .. NOCOL,
-                l2 = GREEN .. ' .-"" ""-.    ' .. NOCOL,
-                l3 = GREEN .. '/  O   O  \\   ' .. NOCOL,
-                l4 = GREEN .. '|_________|   ' .. NOCOL
-            }
-            return ascii
-        else -- AKA unknown
-            randomness = math.random()
-            if randomness >= 0 and randomness <= 0.25 then -- Orange Cat
-                local ascii = {
-                    l1 = B_RED .. "  /'._         " .. NOCOL,
-                    l2 = B_RED .. " (" .. B_GREEN .. "° o" .. B_RED .. " 7        " .. NOCOL,
-                    l3 = B_RED .. "  " ..YELLOW.. "|" .. B_RED .. "'-'".. YELLOW .."\"~.  .   " .. NOCOL,
-                    l4 = B_RED .. "  Uu" .. YELLOW .. "^~" .. B_RED .. "C_J._.\"  " .. NOCOL
-                }
-                return ascii
-            elseif randomness >= 0.25 and randomness <= 0.5 then -- Black Cat
-                local ascii = {
-                    l1 = BLACK .. "  /'._         " .. NOCOL,
-                    l2 = BLACK .. " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
-                    l3 = BLACK .. "  |'-'\"~.  .   " .. NOCOL,
-                    l4 = BLACK .. "  Uu^~C_J._.\"  " .. NOCOL
-                }
-                return ascii
-            elseif randomness >= 0.5 and randomness <= 0.75 then -- Calico Cat
-                local ascii = {
-                    l1 = B_RED .. "  /'." .. BLACK .. "_         " .. NOCOL,
-                    l2 = " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
-                    l3 = "  " .. BLACK .. "|".. WHITE .."'-'\"".. B_RED .."~.  .   " .. NOCOL,
-                    l4 = "  " .. BLACK .. "U" .. WHITE .. "u^" .. B_RED .. "~C_J" .. WHITE .. "._.\"  " .. NOCOL
-                }
-                return ascii
-            else -- if you get more than 0.75 you unlock my cat (his name is Sun and he's a tabby cat)
-                local ascii = {
-                    l1 = BLACK .. "  /'._         " .. NOCOL,
-                    l2 = BLACK .. " (" .. YELLOW .. "° o " .. WHITE .. "7        " .. NOCOL,
-                    l3 = GRAY .. "  |"..WHITE.."'-'".. GRAY .."\"".. BLACK .."~.  .   " .. NOCOL,
-                    l4 = "  Uu^~C_J." .. YELLOW .. "_"..GRAY.."."..YELLOW.."\"  " .. NOCOL
-                }
-                return ascii
-            end
-        end
-
-
-    else -- NO COLORS [Default]
-        if string.lower(info.os):match("ubuntu") then
-            local ascii = {
-                l1 = "  /-'-( )       ",
-                l2 = "( )    |        ",
-                l3 = "  \\-.-( )       ",
-                l4 = "                "
-            }
-            return ascii
-        elseif string.lower(info.os):match("arch") then
-            local ascii = {
-                l1 = "   /\\           ",
-                l2 = "  /\\ \\          ",
-                l3 = " / .. \\         ",
-                l4 = "/.'  '.\\        "
-            }
-            return ascii
-        elseif string.lower(info.os):match("gentoo") then
-            local ascii = {
-                l1 = " ,--.           ",
-                l2 = "( () \\          ",
-                l3 = " `^  /          ",
-                l4 = "  '~'           "
-            }
-            return ascii
-        elseif string.lower(info.os):match("fedora") then
-            local ascii = {
-                l1 = "   /¯¯\\         ",
-                l2 = " __|__          ",
-                l3 = "/  T            ",
-                l4 = "\\__/            "
-            }
-            return ascii
-        elseif string.lower(info.os):match("debian") then
-            local ascii = {
-                l1 = "    _.._        ",
-                l2 = "   (    |       ",
-                l3 = "   | (_/        ",
-                l4 = "    \\           "
-            }
-            return ascii
-        elseif string.lower(info.os):match("alpine") then
-            local ascii = {
-                l1 = " /¯¯¯¯¯¯\\       ",
-                l2 = "/  /\\/\\  \\      ",
-                l3 = "\\ /  \\ \\ /      ",
-                l4 = " \\______/       "
-            }
-            return ascii
-        
-        elseif string.lower(info.os):match("windows") then
-            local ascii = {
-                l1 = '|"""---....     ',
-                l2 = '|____|____|     ',
-                l3 = '|    T    |     ',
-                l4 = '|...---"""\'     '
-            }
-            return ascii
-        elseif string.lower(info.os):match("mac os") then
-            local ascii = {
-                l1 = '  __()_         ',
-                l2 = ".'     '.       ",
-                l3 = '|      (        ',
-                l4 = "'._____.'       "
-            }
-            return ascii
-        elseif string.lower(info.os):match("android") then
-            local ascii = {
-                l1 = '  \\  _  /     ',
-                l2 = ' .-"" ""-.    ',
-                l3 = '/  O   O  \\   ',
-                l4 = '|_________|   '
-            }
-            return ascii
-        else -- AKA unknown
-            local ascii = {
-                l1 = "  /'._         ",
-                l2 = " (° o 7        ",
-                l3 = "  |'-'\"~.  .   ",
-                l4 = "  Uu^~C_J._.\"  "
+                l1 = BLACK .. "  /'._         " .. NOCOL,
+                l2 = BLACK .. " (" .. YELLOW .. "° o " .. WHITE .. "7        " .. NOCOL,
+                l3 = GRAY .. "  |"..WHITE.."'-'".. GRAY .."\"".. BLACK .."~.  .   " .. NOCOL,
+                l4 = "  Uu^~C_J." .. YELLOW .. "_"..GRAY.."."..YELLOW.."\"  " .. NOCOL
             }
             return ascii
         end
+        -- GET DA KITTY!
+        --  /'._         
+        -- (° o 7        
+        --  |'-'"~.  .  
+        --  Uu^~C_J._." 
     end
+    
 end
 
 --[[ INITIALIZZATION ]]
@@ -515,7 +470,7 @@ elseif arg[1] == "--help" or arg[1] == "-h" then
     ]])
 else
     local info = fetch()
-    art = ascii(info, true)
+    art = ascii(info)
 
     io.write(art.l1 .. RED    .. "os: " .. NOCOL .. info.os .. "\n")
     io.write(art.l2 .. YELLOW .. "wm: " .. NOCOL .. info.wm .. "\n")
