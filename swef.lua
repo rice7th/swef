@@ -1,19 +1,15 @@
 #!/usr/bin/env lua
 --[[
     MIT License
-
     Copyright (c) 2022 JhonnyRice
-
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -51,7 +47,7 @@ local NOCOL = "\x1b[0m"
 
 --[[ STOLEN FROM:: https://stackoverflow.com/a/40195356]]
 -- Checks if a file exist
-function exists(file)
+local function exists(file)
     local ok, err, code = os.rename(file, file)
         if not ok then
             if code == 13 then
@@ -62,13 +58,13 @@ function exists(file)
 end
     
 
-function isdir(path)
+local function isdir(path)
     return exists(path.."/")
 end
 
 
 
-function opencmd(cmd)
+local function opencmd(cmd)
     local command = io.popen(cmd, "r")
     local command_output = command:read("*a")
     command:close()
@@ -77,7 +73,7 @@ function opencmd(cmd)
 end
 
 
-function os_family()
+local function os_family()
     local os_family = package.config:sub(1,1)
     if os_family == "/" then
         return "unix"
@@ -86,7 +82,7 @@ function os_family()
     end
 end
 
-function shell()
+local function shell()
     does_proc_exist = isdir("/proc")
     if does_proc_exist then
         return opencmd("cat /proc/$$/comm")
@@ -95,7 +91,7 @@ function shell()
     end
 end
 
-function linux_wm()
+local function linux_wm()
     local graphic_session = os.getenv("XDG_SESSION_TYPE")
     if graphic_session ~= nil then
         if string.lower(graphic_session) == "x11" then
@@ -157,7 +153,7 @@ function linux_wm()
 end
 
 
-function macos_wm()
+local function macos_wm()
     local wm_pid_command = io.popen("ps -e")
     local wm_pids = string.lower(wm_pid_command:read("*a"))
     wm_pid_command:close()
@@ -180,7 +176,7 @@ function macos_wm()
     end
 end
 
-function windows_wm()
+local function windows_wm()
     local wm_pid_command = io.popen("tasklist")
     local wm_pids = string.lower(wm_pid_command:read("*a"))
     wm_pid_command:close()
@@ -200,13 +196,13 @@ function windows_wm()
     end
 end
 
-function windows_version()
+local function windows_version()
     local windows_ver = opencmd("wmic os get Caption /value")
     windows_ver = windows_ver:gsub("Caption=", '')
     return windows_ver
 end
 
-function distro()
+local function distro()
     local distro_command = io.open("/etc/os-release", "r")
     local distro_temp = distro_command:read("*a")
     distro_command:close()
@@ -214,7 +210,7 @@ function distro()
     return distro
 end
 
-function fetch()
+local function fetch()
     local os_type = os_family()
     if os_type == "unix" then
         -- Get Kernel name
@@ -300,7 +296,7 @@ end
 
 
 
-function ascii(info, use_color) -- Boolean
+local function ascii(info, use_color) -- Boolean
     if use_color then
         if string.lower(info.os):match("ubuntu") then
             local ascii = {
