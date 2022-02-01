@@ -25,7 +25,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] MacOS Big Sur (Aero, Quartz, Quartz Compositor)
 
 Places to test:
-- [ ] Any BSD
+- [ ] Any BSD (freeBSD kinda works)
 - [ ] Older Windows versions
 
 For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
