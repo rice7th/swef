@@ -2,10 +2,15 @@
 The Should Work Everywhere Fetch.h.
 
 Written mainly in Lua, it is a generic fetch that works everywhere, even on windows, without emulating stuff exclusive to unix, such as bash.
-The only dependency is Lua. At the moment, the only way to actually use the fetch is by typing:
+The only dependency is Lua. To start it on unix systems, you can jut type the path to swef:
 ```
-lua swef.lua
+/path/to/swef
 ```
+On windows unfortunately the shebang is not a thing yet, so you need to open it with lua:
+```
+lua /path/to/swef
+```
+
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
 
 - [x] Kubuntu 20.04 (Kde, X11, AwesomeWM)
