@@ -39,4 +39,4 @@ Lua: https://www.lua.org/download.html
 
 Thats it.
 
-### Thanks for using swef!
+Thanks for using swef.
