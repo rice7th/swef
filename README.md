@@ -1,5 +1,7 @@
 # swef
-The Should Work Everywhere Fetch.h.
+The Should Work Everywhere Fetch.
+![image](https://user-images.githubusercontent.com/93940240/152065374-8f0b0ede-d2d7-4d94-a502-4368cd1eee56.png)
+Example of the fetch on ubuntu
 
 Written mainly in Lua, it is a generic fetch that works everywhere, even on windows, without emulating stuff exclusive to unix, such as bash.
 The only dependency is Lua. To start it on unix systems, you can jut type the path to swef:
