@@ -21,7 +21,22 @@ Places to test:
 
 For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
 
+## Features
+- [x] OS name
+- [ ] Window Manager
+- [ ] Kernel
+- [ ] Shell (bugged :v)
+
+Maybe in the future:
+- [ ] Hostname
+- [ ] User
+- [ ] CPU
+- [ ] RAM
+- [ ] Disk space
+
 ## Dependences
 Lua: https://www.lua.org/download.html
 
 Thats it.
+
+### Thanks for using swef!
