@@ -1,3 +1,54 @@
+#!/usr/bin/env lua
+--[[
+    MIT License
+
+    Copyright (c) 2022 JhonnyRice
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+]]
+
+-- COLORS (B_ stands for BRIGHT_)
+
+RED    = "\x1b[31m"
+GREEN  = "\x1b[32m"
+YELLOW = "\x1b[33m"
+BLUE   = "\x1b[34m"
+PURPLE = "\x1b[35m"
+CYAN   = "\x1b[36m"
+
+B_RED    = "\x1b[91m"
+B_GREEN  = "\x1b[92m"
+B_YELLOW = "\x1b[93m"
+B_BLUE   = "\x1b[94m"
+B_PURPLE = "\x1b[95m"
+B_CYAN   = "\x1b[96m"
+
+
+-- Monochromatic
+BLACK  = "\x1b[30m"
+GRAY   = "\x1b[90m"
+B_GRAY  = "\x1b[37m"
+WHITE   = "\x1b[97m"
+
+-- Remove all colors
+NOCOL = "\x1b[0m"
+
 --[[ STOLEN FROM:: https://stackoverflow.com/a/40195356]]
 -- Checks if a file exist
 function exists(file)
@@ -221,7 +272,7 @@ function fetch()
             local fetch = {
                 os = "Maybe BSD or Minix, this is still in WIP",
                 wm = "¯\\_(ツ)_/¯",
-                kn = "minix or bsd??",
+                kn = "¯\\_(ツ)_/¯",
                 sh = "¯\\_(ツ)_/¯"
             }
             return fetch
@@ -237,7 +288,7 @@ function fetch()
         return fetch
     else
         local fetch = {
-            os = "NANI?!?",
+            os = "you defeated me... (your os is CURRENTLY unsupported)",
             wm = "not sure",
             kn = "unknown",
             sh = "unknown"
@@ -245,97 +296,233 @@ function fetch()
         return fetch
     end
 end
---[[ INITIALIZZATION ]]
-local info = fetch()
 
-function ascii()
-    if string.lower(info.os):match("ubuntu") then
-        local ascii = {
-            l1 = "  /-'-( )       ",
-            l2 = "( )    |        ",
-            l3 = "  \\-.-( )       ",
-            l4 = "                "
-        }
-        return ascii
-    elseif string.lower(info.os):match("arch") then
-        local ascii = {
-            l1 = "   /\\           ",
-            l2 = "  /\\ \\          ",
-            l3 = " / .. \\         ",
-            l4 = "/.'  '.\\        "
-        }
-        return ascii
-    elseif string.lower(info.os):match("gentoo") then
-        local ascii = {
-            l1 = " ,--.           ",
-            l2 = "( () \\          ",
-            l3 = " `^  /          ",
-            l4 = "  '~'           "
-        }
-        return ascii
-    elseif string.lower(info.os):match("fedora") then
-        local ascii = {
-            l1 = "   /¯¯\\         ",
-            l2 = " __|__          ",
-            l3 = "/  T            ",
-            l4 = "\\__/            "
-        }
-        return ascii
-    elseif string.lower(info.os):match("debian") then
-        local ascii = {
-            l1 = "    _.._        ",
-            l2 = "   (    |       ",
-            l3 = "   | (_/        ",
-            l4 = "    \\           "
-        }
-        return ascii
-    elseif string.lower(info.os):match("alpine") then
-        local ascii = {
-            l1 = " /¯¯¯¯¯¯\\       ",
-            l2 = "/  /\\/\\  \\      ",
-            l3 = "\\ /  \\ \\ /      ",
-            l4 = " \\______/       "
-        }
-        return ascii
-    
-    elseif string.lower(info.os):match("windows") then
-        local ascii = {
-            l1 = '|"""---....     ',
-            l2 = '|____|____|     ',
-            l3 = '|    T    |     ',
-            l4 = '|...---"""\'     '
-        }
-        return ascii
-    elseif string.lower(info.os):match("mac os") then
-        local ascii = {
-            l1 = '  __()_      ',
-            l2 = ".'     '.    ",
-            l3 = '|      (     ',
-            l4 = "'._____.'    "
-        }
-        return ascii
-    elseif string.lower(info.os):match("android") then
-        local ascii = {
-            l1 = '  \\  ___  /     ',
-            l2 = ' .-""   ""-.    ',
-            l3 = '/  O     O  \\   ',
-            l4 = '|___________|   '
-        }
-        return ascii
-    else -- AKA unknown
-        local ascii = {
-            l1 = "  /'._         ",
-            l2 = " (° o 7        ",
-            l3 = "  |'-'\"~.  .   ",
-            l4 = "  Uu^~C_J._.\"  "
-        }
-        return ascii
+
+
+
+function ascii(info, use_color) -- Boolean
+    if use_color then
+        if string.lower(info.os):match("ubuntu") then
+            local ascii = {
+                l1 = YELLOW .. "  /-".. B_RED .."'-" .. RED .. "( )       " .. NOCOL,
+                l2 = B_RED .. "( )    |        " .. NOCOL,
+                l3 = YELLOW .. "  \\-".. RED ..".-".. YELLOW .."( )       " .. NOCOL,
+                l4 = NOCOL .. "                " .. NOCOL
+            }
+            return ascii
+        elseif string.lower(info.os):match("arch") then
+            local ascii = {
+                l1 = CYAN .. "   /\\           " .. NOCOL,
+                l2 = CYAN .. "  /\\ \\          " .. NOCOL,
+                l3 = CYAN .. " / .. \\         " .. NOCOL,
+                l4 = CYAN .. "/.'  '.\\        " .. NOCOL
+            }
+            return ascii
+        elseif string.lower(info.os):match("gentoo") then
+            local ascii = {
+                l1 = B_GRAY .. " ,--.           " .. NOCOL,
+                l2 = B_GRAY .. "( () \\          " .. NOCOL,
+                l3 = B_GRAY .. " `^  /          " .. NOCOL,
+                l4 = B_GRAY .. "  '~'           " .. NOCOL
+            }
+            return ascii
+        elseif string.lower(info.os):match("fedora") then
+            local ascii = {
+                l1 = BLUE .. "   /¯¯\\         " .. NOCOL,
+                l2 = BLUE .. " __|__          " .. NOCOL,
+                l3 = BLUE .. "/  T            " .. NOCOL,
+                l4 = BLUE .. "\\__/            " .. NOCOL
+            }
+            return ascii
+        elseif string.lower(info.os):match("debian") then
+            local ascii = {
+                l1 = RED .. "    _.._        " .. NOCOL,
+                l2 = RED .. "   (    |       " .. NOCOL,
+                l3 = RED .. "   | (_/        " .. NOCOL,
+                l4 = RED .. "    \\           " .. NOCOL
+            }
+            return ascii
+        elseif string.lower(info.os):match("alpine") then
+            local ascii = {
+                l1 = BLUE .. " /¯¯¯¯¯¯\\       " .. NOCOL,
+                l2 = BLUE .. "/  " .. WHITE .. "/\\/\\" .. BLUE .. "  \\      " .. NOCOL,
+                l3 = BLUE .. "\\ " .. WHITE .. "/  \\ \\" .. BLUE .. " /      " .. NOCOL,
+                l4 = BLUE .. " \\______/       " .. NOCOL
+            }
+            return ascii
+        
+        elseif string.lower(info.os):match("windows") then
+            local ascii = {
+                l1 = '|"""---....     ',
+                l2 = '|____|____|     ',
+                l3 = '|    T    |     ',
+                l4 = '|...---"""\'     '
+            }
+            return ascii
+        elseif string.lower(info.os):match("mac os") then
+            local ascii = {
+                l1 = RED .. '  __()_         ' .. NOCOL,
+                l2 = YELLOW .. ".'     '.       " .. NOCOL,
+                l3 = GREEN .. '|      (        ' .. NOCOL,
+                l4 = CYAN .. "'._____.'       " .. NOCOL
+            }
+            return ascii
+        elseif string.lower(info.os):match("android") then
+            local ascii = {
+                l1 = GREEN .. '  \\  _  /     ' .. NOCOL,
+                l2 = GREEN .. ' .-"" ""-.    ' .. NOCOL,
+                l3 = GREEN .. '/  O   O  \\   ' .. NOCOL,
+                l4 = GREEN .. '|_________|   ' .. NOCOL
+            }
+            return ascii
+        else -- AKA unknown
+            randomness = math.random()
+            if randomness >= 0 and randomness <= 0.25 then -- Orange Cat
+                local ascii = {
+                    l1 = B_RED .. "  /'._         " .. NOCOL,
+                    l2 = B_RED .. " (" .. B_GREEN .. "° o" .. B_RED .. " 7        " .. NOCOL,
+                    l3 = B_RED .. "  " ..YELLOW.. "|" .. B_RED .. "'-'".. YELLOW .."\"~.  .   " .. NOCOL,
+                    l4 = B_RED .. "  Uu" .. YELLOW .. "^~" .. B_RED .. "C_J._.\"  " .. NOCOL
+                }
+                return ascii
+            elseif randomness >= 0.25 and randomness <= 0.5 then -- Black Cat
+                local ascii = {
+                    l1 = BLACK .. "  /'._         " .. NOCOL,
+                    l2 = BLACK .. " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
+                    l3 = BLACK .. "  |'-'\"~.  .   " .. NOCOL,
+                    l4 = BLACK .. "  Uu^~C_J._.\"  " .. NOCOL
+                }
+                return ascii
+            elseif randomness >= 0.5 and randomness <= 0.75 then -- Calico Cat
+                local ascii = {
+                    l1 = B_RED .. "  /'." .. BLACK .. "_         " .. NOCOL,
+                    l2 = " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
+                    l3 = "  " .. BLACK .. "|".. WHITE .."'-'\"".. B_RED .."~.  .   " .. NOCOL,
+                    l4 = "  " .. BLACK .. "U" .. WHITE .. "u^" .. B_RED .. "~C_J" .. WHITE .. "._.\"  " .. NOCOL
+                }
+                return ascii
+            else -- if you get more than 0.75 you unlock my cat (his name is Sun and he's a tabby cat)
+                local ascii = {
+                    l1 = BLACK .. "  /'._         " .. NOCOL,
+                    l2 = BLACK .. " (" .. YELLOW .. "° o " .. WHITE .. "7        " .. NOCOL,
+                    l3 = GRAY .. "  |"..WHITE.."'-'".. GRAY .."\"".. BLACK .."~.  .   " .. NOCOL,
+                    l4 = "  Uu^~C_J." .. YELLOW .. "_"..GRAY.."."..YELLOW.."\"  " .. NOCOL
+                }
+                return ascii
+            end
+        end
+
+
+    else -- NO COLORS [Default]
+        if string.lower(info.os):match("ubuntu") then
+            local ascii = {
+                l1 = "  /-'-( )       ",
+                l2 = "( )    |        ",
+                l3 = "  \\-.-( )       ",
+                l4 = "                "
+            }
+            return ascii
+        elseif string.lower(info.os):match("arch") then
+            local ascii = {
+                l1 = "   /\\           ",
+                l2 = "  /\\ \\          ",
+                l3 = " / .. \\         ",
+                l4 = "/.'  '.\\        "
+            }
+            return ascii
+        elseif string.lower(info.os):match("gentoo") then
+            local ascii = {
+                l1 = " ,--.           ",
+                l2 = "( () \\          ",
+                l3 = " `^  /          ",
+                l4 = "  '~'           "
+            }
+            return ascii
+        elseif string.lower(info.os):match("fedora") then
+            local ascii = {
+                l1 = "   /¯¯\\         ",
+                l2 = " __|__          ",
+                l3 = "/  T            ",
+                l4 = "\\__/            "
+            }
+            return ascii
+        elseif string.lower(info.os):match("debian") then
+            local ascii = {
+                l1 = "    _.._        ",
+                l2 = "   (    |       ",
+                l3 = "   | (_/        ",
+                l4 = "    \\           "
+            }
+            return ascii
+        elseif string.lower(info.os):match("alpine") then
+            local ascii = {
+                l1 = " /¯¯¯¯¯¯\\       ",
+                l2 = "/  /\\/\\  \\      ",
+                l3 = "\\ /  \\ \\ /      ",
+                l4 = " \\______/       "
+            }
+            return ascii
+        
+        elseif string.lower(info.os):match("windows") then
+            local ascii = {
+                l1 = '|"""---....     ',
+                l2 = '|____|____|     ',
+                l3 = '|    T    |     ',
+                l4 = '|...---"""\'     '
+            }
+            return ascii
+        elseif string.lower(info.os):match("mac os") then
+            local ascii = {
+                l1 = '  __()_         ',
+                l2 = ".'     '.       ",
+                l3 = '|      (        ',
+                l4 = "'._____.'       "
+            }
+            return ascii
+        elseif string.lower(info.os):match("android") then
+            local ascii = {
+                l1 = '  \\  _  /     ',
+                l2 = ' .-"" ""-.    ',
+                l3 = '/  O   O  \\   ',
+                l4 = '|_________|   '
+            }
+            return ascii
+        else -- AKA unknown
+            local ascii = {
+                l1 = "  /'._         ",
+                l2 = " (° o 7        ",
+                l3 = "  |'-'\"~.  .   ",
+                l4 = "  Uu^~C_J._.\"  "
+            }
+            return ascii
+        end
     end
 end
--- info.os = "debian"
-art = ascii()
 
-io.write(art.l1 .. "os: " .. info.os .. "\n")
-io.write(art.l2 .. "wm: " .. info.wm .. "\n")
-io.write(art.l3 .. "kn: " .. info.kn .. "\n")
-io.write(art.l4 .. "sh: " .. info.sh .. "\n")
+--[[ INITIALIZZATION ]]
+
+if arg[1] == "--no-color" or arg[1] == "-n" then
+    local info = fetch()
+    art = ascii(info, false)
+
+    io.write(art.l1 .. "os: " .. info.os .. "\n")
+    io.write(art.l2 .. "wm: " .. info.wm .. "\n")
+    io.write(art.l3 .. "kn: " .. info.kn .. "\n")
+    io.write(art.l4 .. "sh: " .. info.sh .. "\n")
+elseif arg[1] == "--help" or arg[1] == "-h" then
+    io.write([[
+        SWEF 1.0 - The Should-Work-Everywhere-Fetch
+        -------------------------------------------
+        usage: lua swef.lua [--help] [-h] [--no-color] [-n] [--no-ascii]
+        --help, -h        Display this message
+        --no-color, -n    Don't show the colors
+    ]])
+else
+    local info = fetch()
+    art = ascii(info, true)
+
+    io.write(art.l1 .. B_RED    .. "os: " .. RED    .. info.os .. "\n")
+    io.write(art.l2 .. B_YELLOW .. "wm: " .. YELLOW .. info.wm .. "\n")
+    io.write(art.l3 .. B_GREEN  .. "kn: " .. GREEN  .. info.kn .. "\n")
+    io.write(art.l4 .. B_CYAN   .. "sh: " .. CYAN   .. info.sh .. "\n")
+end
