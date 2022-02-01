@@ -251,58 +251,75 @@ local info = fetch()
 function ascii()
     if string.lower(info.os):match("ubuntu") then
         local ascii = {
-            l1 = "  /-'-( )    ",
-            l2 = "( )    |     ",
-            l3 = "  \\-.-( )    ",
-            l4 = "             "
+            l1 = "  /-'-( )       ",
+            l2 = "( )    |        ",
+            l3 = "  \\-.-( )       ",
+            l4 = "                "
         }
         return ascii
     elseif string.lower(info.os):match("arch") then
         local ascii = {
-            l1 = "   /\\        ",
-            l2 = "  /\\ \\       ",
-            l3 = " / .. \\      ",
-            l4 = "/.'  '.\\     "
+            l1 = "   /\\           ",
+            l2 = "  /\\ \\          ",
+            l3 = " / .. \\         ",
+            l4 = "/.'  '.\\        "
         }
         return ascii
     elseif string.lower(info.os):match("gentoo") then
         local ascii = {
-            l1 = " ,--.        ",
-            l2 = "( () \\       ",
-            l3 = " `^  /       ",
-            l4 = "  '~'        "
+            l1 = " ,--.           ",
+            l2 = "( () \\          ",
+            l3 = " `^  /          ",
+            l4 = "  '~'           "
         }
         return ascii
     elseif string.lower(info.os):match("fedora") then
         local ascii = {
-            l1 = "   /¯¯\\      ",
-            l2 = " __|__       ",
-            l3 = "/  T         ",
-            l4 = "\\__/         "
+            l1 = "   /¯¯\\         ",
+            l2 = " __|__          ",
+            l3 = "/  T            ",
+            l4 = "\\__/            "
         }
         return ascii
     elseif string.lower(info.os):match("debian") then
         local ascii = {
-            l1 = "    _.._     ",
-            l2 = "   (    |    ",
-            l3 = "   | (_/     ",
-            l4 = "    \\        "
+            l1 = "    _.._        ",
+            l2 = "   (    |       ",
+            l3 = "   | (_/        ",
+            l4 = "    \\           "
         }
         return ascii
     elseif string.lower(info.os):match("alpine") then
         local ascii = {
-            l1 = " /¯¯¯¯¯¯\\    ",
-            l2 = "/  /\\/\\  \\   ",
-            l3 = "\\ /  \\ \\ /   ",
-            l4 = " \\______/    "
+            l1 = " /¯¯¯¯¯¯\\       ",
+            l2 = "/  /\\/\\  \\      ",
+            l3 = "\\ /  \\ \\ /      ",
+            l4 = " \\______/       "
         }
         return ascii
+    
     elseif string.lower(info.os):match("windows") then
         local ascii = {
-            l1 = '|"""---....  ',
-            l2 = '|____|____|  ',
-            l3 = '|    T    |  ',
-            l4 = '|...---"""\'  '
+            l1 = '|"""---....     ',
+            l2 = '|____|____|     ',
+            l3 = '|    T    |     ',
+            l4 = '|...---"""\'     '
+        }
+        return ascii
+    elseif string.lower(info.os):match("mac os") then
+        local ascii = {
+            l1 = '  _()_          ',
+            l2 = ".'    '.        ",
+            l3 = '|     (         ',
+            l4 = "'.____.'        "
+        }
+        return ascii
+    elseif string.lower(info.os):match("android") then
+        local ascii = {
+            l1 = '  \\  ___  /     ',
+            l2 = ' .-""   ""-.    ',
+            l3 = '/  O     O  \\   ',
+            l4 = '|___________|   '
         }
         return ascii
     else -- AKA unknown
