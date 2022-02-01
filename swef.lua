@@ -25,29 +25,29 @@
 
 -- COLORS (B_ stands for BRIGHT_)
 
-RED    = "\x1b[31m"
-GREEN  = "\x1b[32m"
-YELLOW = "\x1b[33m"
-BLUE   = "\x1b[34m"
-PURPLE = "\x1b[35m"
-CYAN   = "\x1b[36m"
+local RED    = "\x1b[31m"
+local GREEN  = "\x1b[32m"
+local YELLOW = "\x1b[33m"
+local BLUE   = "\x1b[34m"
+local PURPLE = "\x1b[35m"
+local CYAN   = "\x1b[36m"
 
-B_RED    = "\x1b[91m"
-B_GREEN  = "\x1b[92m"
-B_YELLOW = "\x1b[93m"
-B_BLUE   = "\x1b[94m"
-B_PURPLE = "\x1b[95m"
-B_CYAN   = "\x1b[96m"
+local B_RED    = "\x1b[91m"
+local B_GREEN  = "\x1b[92m"
+local B_YELLOW = "\x1b[93m"
+local B_BLUE   = "\x1b[94m"
+local B_PURPLE = "\x1b[95m"
+local B_CYAN   = "\x1b[96m"
 
 
 -- Monochromatic
-BLACK  = "\x1b[30m"
-GRAY   = "\x1b[90m"
-B_GRAY  = "\x1b[37m"
-WHITE   = "\x1b[97m"
+local BLACK  = "\x1b[30m"
+local GRAY   = "\x1b[90m"
+local B_GRAY  = "\x1b[37m"
+local WHITE   = "\x1b[97m"
 
 -- Remove all colors
-NOCOL = "\x1b[0m"
+local NOCOL = "\x1b[0m"
 
 --[[ STOLEN FROM:: https://stackoverflow.com/a/40195356]]
 -- Checks if a file exist
