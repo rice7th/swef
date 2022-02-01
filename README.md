@@ -23,9 +23,9 @@ For the rest it should work fine on tons of platforms. At least where Lua is sup
 
 ## Features
 - [x] OS name
-- [ ] Window Manager
-- [ ] Kernel
-- [ ] Shell (bugged :v)
+- [x] Window Manager
+- [x] Kernel
+- [x] Shell (bugged :v)
 
 Maybe in the future:
 - [ ] Hostname
