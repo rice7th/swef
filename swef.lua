@@ -521,8 +521,8 @@ else
     local info = fetch()
     art = ascii(info, true)
 
-    io.write(art.l1 .. B_RED    .. "os: " .. RED    .. info.os .. "\n")
-    io.write(art.l2 .. B_YELLOW .. "wm: " .. YELLOW .. info.wm .. "\n")
-    io.write(art.l3 .. B_GREEN  .. "kn: " .. GREEN  .. info.kn .. "\n")
-    io.write(art.l4 .. B_CYAN   .. "sh: " .. CYAN   .. info.sh .. "\n")
+    io.write(art.l1 .. RED    .. "os: " .. NOCOL .. info.os .. "\n")
+    io.write(art.l2 .. YELLOW .. "wm: " .. NOCOL .. info.wm .. "\n")
+    io.write(art.l3 .. GREEN  .. "kn: " .. NOCOL .. info.kn .. "\n")
+    io.write(art.l4 .. CYAN   .. "sh: " .. NOCOL .. info.sh .. "\n")
 end
