@@ -308,10 +308,10 @@ function ascii()
         return ascii
     elseif string.lower(info.os):match("mac os") then
         local ascii = {
-            l1 = '  __()_         ',
-            l2 = ".'     '.       ",
-            l3 = '|      (        ',
-            l4 = "'._____.'       "
+            l1 = '  __()_      ',
+            l2 = ".'     '.    ",
+            l3 = '|      (     ',
+            l4 = "'._____.'    "
         }
         return ascii
     elseif string.lower(info.os):match("android") then
