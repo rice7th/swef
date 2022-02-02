@@ -85,7 +85,7 @@ local function shell()
     --end
 end
 
-local function linux_wm()
+local function linux_bsd_wm()
     local graphic_session = os.getenv("XDG_SESSION_TYPE")
     if graphic_session then
         if graphic_session:lower() == "x11" then
@@ -226,7 +226,7 @@ local function fetch()
             elseif os_name:lower() == "gnu/linux" or "linux" then
                 local fetch = {
                     os = distro(),
-                    wm = linux_wm(),
+                    wm = linux_bsd_wm(),
                     kn = kern .. " " .. kern_release,
                     sh = shell()
                 }
@@ -259,7 +259,7 @@ local function fetch()
         elseif kern:lower():find("bsd") then
             local fetch = {
                 os = os_name,
-                wm = "WIP",
+                wm = linux_bsd_wm(),
                 kn = kern .. kern_release,
                 sh = opencmd("basename $SHELL")
             }
