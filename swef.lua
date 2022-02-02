@@ -407,6 +407,7 @@ local function ascii(info)
         -- |_________|   
         return ascii
     else -- AKA unknown
+        math.randomseed(os.time())
         randomness = math.random()
         if randomness >= 0 and randomness <= 0.25 then -- Orange Cat
             local ascii = {
