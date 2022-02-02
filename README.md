@@ -18,7 +18,7 @@ sudo make install
 #### MacOS
 again use the makefile:
 ```
-sudo make installmacos
+sudo make install
 ```
 #### Android
 ```
