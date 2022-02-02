@@ -45,6 +45,7 @@ Maybe in the future:
 
 ## Dependences
 Lua: https://www.lua.org/download.html
+xprop
 
 Thats it.
 
