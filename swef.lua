@@ -77,12 +77,12 @@ local function os_family()
 end
 
 local function shell()
-    local does_proc_exist = isdir("/proc")
-    if does_proc_exist then
-        return opencmd("cat /proc/$$/comm")
-    else
+    -- local does_proc_exist = isdir("/proc")
+    --if does_proc_exist then
+    --    return opencmd("cat /proc/$$/comm")
+    --else
         return opencmd("basename $SHELL")
-    end
+    --end
 end
 
 local function linux_wm()
@@ -369,6 +369,18 @@ local function ascii(info)
         -- \ /  \ \ /
         --  \______/
         return ascii
+    elseif string.lower(info.os):find("void") then
+        local ascii = {
+            l1 = BLUE .. " /¯¯¯¯¯¯\\       " .. NOCOL,
+            l2 = BLUE .. "/  " .. WHITE .. "/\\/\\" .. BLUE .. "  \\      " .. NOCOL,
+            l3 = BLUE .. "\\ " .. WHITE .. "/  \\ \\" .. BLUE .. " /      " .. NOCOL,
+            l4 = BLUE .. " \\______/       " .. NOCOL
+        }
+        --   .''-.
+        --/'.  '. \
+        --\ '.  './
+        -- '-..'
+        return ascii
     
     elseif string.lower(info.os):find("windows") then
         local ascii = {
@@ -453,21 +465,21 @@ end
 
 --[[ INITIALIZZATION ]]
 
-if arg[1] == "--no-color" or arg[1] == "-n" then
+if arg[1] == "--icons" or arg[1] == "-i" then
     local info = fetch()
-    art = ascii(info, false)
+    art = ascii(info)
 
-    io.write(art.l1 .. "os: " .. info.os .. "\n")
-    io.write(art.l2 .. "wm: " .. info.wm .. "\n")
-    io.write(art.l3 .. "kn: " .. info.kn .. "\n")
-    io.write(art.l4 .. "sh: " .. info.sh .. "\n")
+    io.write(art.l1 .. RED    .. "\u{f05a}  " .. NOCOL .. info.os .. "\n")
+    io.write(art.l2 .. YELLOW .. "\u{f2d0}  " .. NOCOL .. info.wm .. "\n")
+    io.write(art.l3 .. GREEN  .. "\u{f085}  " .. NOCOL .. info.kn .. "\n")
+    io.write(art.l4 .. CYAN   .. "\u{e795}  " .. NOCOL .. info.sh .. "\n")
 elseif arg[1] == "--help" or arg[1] == "-h" then
     io.write([[
-        SWEF 1.0 - The Should-Work-Everywhere-Fetch
-        -------------------------------------------
-        usage: lua swef.lua [--help] [-h] [--no-color] [-n] [--no-ascii]
-        --help, -h        Display this message
-        --no-color, -n    Don't show the colors
+SWEF 1.0 - The Should-Work-Everywhere-Fetch
+-------------------------------------------
+usage: lua swef.lua [--help] [-h] [--no-color] [-n] [--no-ascii]
+--help, -h        Display this message
+--icons, -i       Use nerd fonts
     ]])
 else
     local info = fetch()
