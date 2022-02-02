@@ -1,12 +1,12 @@
 PREFIX?=/usr
 
 installmacos:
-	cp -f swef.lua $(PREFIX)/bin/swef.lua
-	chmod 755 $(PREFIX)/bin/swef.lua
+	cp -f swef $(PREFIX)/bin/swef
+	chmod 755 $(PREFIX)/bin/swef
 install:
-	cp -f swef.lua $(PREFIX)/bin/swef.lua
-	chmod 755 $(PREFIX)/bin/swef.lua
+	cp -f swef $(PREFIX)/bin/swef
+	chmod 755 $(PREFIX)/bin/swef
 uninstall:
-	rm -f $(PREFIX)/bin/swef.lua
+	rm -f $(PREFIX)/bin/swef
 
 .PHONY: installmacos install uninstall
