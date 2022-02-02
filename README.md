@@ -6,17 +6,34 @@ The Should Work Everywhere Fetch.
 Example of the fetch on ubuntu
 
 Written mainly in Lua, it is a generic fetch that works everywhere, even on windows, without emulating stuff exclusive to unix, such as bash.
-The only dependency is Lua. To start it on unix systems, you can jut type the path to swef:
+The only dependencies are Lua and xprop, but xprop is required only on x11 systems, meaning that you dont need it for android, MacOs, windows and wayland systems. Also Xprop is usually preinstalled, but double-checking never hurts :)
+
+## Installation
+#### Linux
+use the makefile:
 ```
-/path/to/swef
+sudo make install
 ```
-On windows unfortunately the shebang is not a thing yet, so you need to open it with lua:
+
+#### MacOS
+again use the makefile:
 ```
-lua /path/to/swef
+sudo make installmacos
+```
+#### Android
+```
+chmod +x ./swef.lua
+cp ./swef.lua /data/data/com.termux/files/usr/bin
+```
+
+#### Windows
+run the file every time you want to use it i think
+```
+lua<version> C:\path\to\swef.lua
 ```
 
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
-
+- [ ] example_os version (desktop envrionement, Display protocol, window manager)
 - [x] Kubuntu 20.04 (Kde, X11, AwesomeWM)
 - [x] Fedora 35 (Gnome, Wayland, Mutter)
 - [x] Alpine Linux 3.15 (none, tty, none)
