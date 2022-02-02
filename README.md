@@ -32,7 +32,7 @@ For the rest it should work fine on tons of platforms. At least where Lua is sup
 If your os is not supported (e.g. no ascii available or the os is not recognised) you can enjoy a cute cat art that changes breeed randomly as a replacement. If you REALLY want a new ascii art for your system, then please submit a github issue.
 ## Features
 - [x] OS name
-- [x] Window Manager
+- [x] Window Manager (EWMH wm's are comin!)
 - [x] Kernel
 - [x] Shell ~(bugged :v)~ fixed 👌
 
