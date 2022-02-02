@@ -372,10 +372,10 @@ local function ascii(info)
     
     elseif string.lower(info.os):find("windows") then
         local ascii = {
-            l1 = '|"""---....     ',
-            l2 = '|____|____|     ',
-            l3 = '|    T    |     ',
-            l4 = '|...---"""\'     '
+            l1 = CYAN .. '|"""---....     ' .. NOCOL,
+            l2 = CYAN .. '|____|____|     ' .. NOCOL,
+            l3 = CYAN .. '|    T    |     ' .. NOCOL,
+            l4 = CYAN .. '|...---"""\'     ' .. NOCOL
         }
         --|"""---....     
         --|____|____|     
