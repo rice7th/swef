@@ -34,7 +34,7 @@ If your os is not supported (e.g. no ascii available or the os is not recognised
 - [x] OS name
 - [x] Window Manager
 - [x] Kernel
-- [x] Shell (bugged :v)
+- [x] Shell ~(bugged :v)~ fixed 👌
 
 Maybe in the future:
 - [ ] Hostname
