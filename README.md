@@ -32,10 +32,17 @@ run the file every time you want to use it i think
 lua<version> C:\path\to\swef.lua
 ```
 
+## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
-- [ ] example_os version (desktop envrionement, Display protocol, window manager)
+
+![Kubuntu](https://user-images.githubusercontent.com/93940240/152065374-8f0b0ede-d2d7-4d94-a502-4368cd1eee56.png)
+
 - [x] Kubuntu 20.04 (Kde, X11, AwesomeWM)
+---
+![Fedora](https://user-images.githubusercontent.com/93940240/152212814-08a44df8-3f23-40ea-ae58-f35898ed3aa7.png)
+
 - [x] Fedora 35 (Gnome, Wayland, Mutter)
+---
 - [x] Alpine Linux 3.15 (none, tty, none)
 - [x] Windows 10 Pro (Metro, ??, Explorer)
 - [x] Android 9 (Material, ??, are there WMs for android?)
