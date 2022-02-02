@@ -256,7 +256,7 @@ local function fetch()
                 sh = shell()
             }
             return fetch
-        elseif kern:lower():find("BSD") then
+        elseif kern:lower():find("bsd") then
             local fetch = {
                 os = os_name,
                 wm = "WIP",
