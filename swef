@@ -223,7 +223,7 @@ local function fetch()
                 }
                 return fetch
 
-            elseif os_name:lower() == "gnu/linux" or "linux" then
+            elseif os_name:lower() == "gnu/linux" or os_name:lower() == "linux" then
                 local fetch = {
                     os = distro(),
                     wm = linux_bsd_wm(),
