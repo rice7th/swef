@@ -210,10 +210,11 @@ local function fetch()
         -- Get Kernel release
         kern_release = opencmd("uname -r")
 
-        -- Get OS Name (not distro!)
-        os_name = opencmd("uname -o")
+        
         -- Check if the kernel is linux, macos, bsd or other
         if kern:lower() == "linux" then
+            -- Get OS Name (not distro!)
+            os_name = opencmd("uname -o")
             if os_name:lower() == "android" then
                 local fetch = {
                     os = "Android",
