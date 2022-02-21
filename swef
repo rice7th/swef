@@ -205,7 +205,7 @@ local function fetch()
     local os_type = os_family()
     if os_type == "unix" then
         if exists("/rc") then -- Is Plan9?
-            os_name = opencmd("ape/uname")
+            os_name = opencmd("/bin/ape/uname")
             local fetch = {
                 os = os_name,
                 wm = 'rio',
