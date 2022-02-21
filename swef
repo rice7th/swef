@@ -204,76 +204,88 @@ end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix" then
-        -- Get Kernel name
-        kern = opencmd("uname")
+        if exists("/rc") then -- Is Plan9?
+            os_name = opencmd("ape/uname")
+            local fetch = {
+                os = os_name,
+                wm = 'rio',
+                kn = 'Plan9',
+                sh = 'rc'
+            }
+            return fetch
+        else
+            -- Get Kernel name
+            kern = opencmd("uname")
 
-        -- Get Kernel release
-        kern_release = opencmd("uname -r")
+            -- Get Kernel release
+            kern_release = opencmd("uname -r")
 
-        
-        -- Check if the kernel is linux, macos, bsd or other
-        if kern:lower() == "linux" then
-            -- Get OS Name (not distro!)
-            os_name = opencmd("uname -o")
-            if os_name:lower() == "android" then
+
+            -- Check if the kernel is linux, macos, bsd or other
+            if kern:lower() == "linux" then
+                -- Get OS Name (not distro!)
+                os_name = opencmd("uname -o")
+                if os_name:lower() == "android" then
+                    local fetch = {
+                        os = "Android",
+                        wm = "AndroidWM",
+                        kn = kern .. kern_release,
+                        sh = shell()
+                    }
+                    return fetch
+
+                elseif os_name:lower() == "gnu/linux" or os_name:lower() == "linux" then
+                    local fetch = {
+                        os = distro(),
+                        wm = linux_bsd_wm(),
+                        kn = kern .. " " .. kern_release,
+                        sh = shell()
+                    }
+                    return fetch
+                else
+                    local fetch = {
+                        os = ":(",
+                        wm = ":(",
+                        kn = ":(",
+                        sh = ":("
+                    }
+                    return fetch
+                end
+            elseif kern:lower() == "darwin" then
                 local fetch = {
-                    os = "Android",
-                    wm = "AndroidWM",
-                    kn = kern .. kern_release,
-                    sh = shell()
-                }
-                return fetch
-
-            elseif os_name:lower() == "gnu/linux" or os_name:lower() == "linux" then
-                local fetch = {
-                    os = distro(),
-                    wm = linux_bsd_wm(),
+                    os = "Mac Os",
+                    wm = macos_wm(),
                     kn = kern .. " " .. kern_release,
                     sh = shell()
                 }
                 return fetch
+            elseif kern:lower():find("mingw64") then
+                local fetch = {
+                    os = "Windows (mingw)",
+                    wm = windows_wm(),
+                    kn = "mingw64",
+                    sh = shell()
+                }
+                return fetch
+            elseif kern:lower():find("bsd") then
+                local fetch = {
+                    os = os_name,
+                    wm = linux_bsd_wm(),
+                    kn = kern .. kern_release,
+                    sh = opencmd("basename $SHELL")
+                }
+                return fetch
             else
                 local fetch = {
-                    os = ":(",
-                    wm = ":(",
-                    kn = ":(",
-                    sh = ":("
+                    os = "Maybe or Minix, this is still in WIP",
+                    wm = "¯\\_(ツ)_/¯",
+                    kn = "¯\\_(ツ)_/¯",
+                    sh = "¯\\_(ツ)_/¯"
                 }
                 return fetch
             end
-        elseif kern:lower() == "darwin" then
-            local fetch = {
-                os = "Mac Os",
-                wm = macos_wm(),
-                kn = kern .. " " .. kern_release,
-                sh = shell()
-            }
-            return fetch
-        elseif kern:lower():find("mingw64") then
-            local fetch = {
-                os = "Windows (mingw)",
-                wm = windows_wm(),
-                kn = "mingw64",
-                sh = shell()
-            }
-            return fetch
-        elseif kern:lower():find("bsd") then
-            local fetch = {
-                os = os_name,
-                wm = linux_bsd_wm(),
-                kn = kern .. kern_release,
-                sh = opencmd("basename $SHELL")
-            }
-            return fetch
-        else
-            local fetch = {
-                os = "Maybe or Minix, this is still in WIP",
-                wm = "¯\\_(ツ)_/¯",
-                kn = "¯\\_(ツ)_/¯",
-                sh = "¯\\_(ツ)_/¯"
-            }
-            return fetch
         end
+        
     --[[ WINDOWS ]]
     elseif os_type == "windows" then
         local fetch = {
@@ -291,6 +303,7 @@ local function fetch()
             sh = "unknown"
         }
         return fetch
+        
     end
 end
 
