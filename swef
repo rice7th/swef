@@ -70,7 +70,7 @@ end
 local function os_family()
     local os_family = package.config:sub(1,1)
     if os_family == "/" then
-        return "unix"
+        return "unix-like"
     elseif os_family == "\\" then
         return "windows"
     end
@@ -96,12 +96,12 @@ local function linux_bsd_wm()
                 "xmonad"
             }
             for i=1,#non_ewmh_x11_wm_list do
-                if wm_pids:find(non_ewmh_x11_wm_list[i]) then
+                if wm_pids:lower():find(non_ewmh_x11_wm_list[i]) then
                     wm = non_ewmh_x11_wm_list[i]
                     break
                 end
             end
-            return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]]) or wm
+            return wm or opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
         elseif graphic_session:lower() == "wayland" then
             local wm_pid_command = io.popen("ps -e")
             local wm_pids = wm_pid_command:read("*a"):lower()
@@ -152,7 +152,7 @@ local function linux_bsd_wm()
             return "unknown"
         end
     else
-        -- Graphic session is TTY
+        -- Graphic session is TTY or unknown
         return "tty"
     end
 end
@@ -215,7 +215,7 @@ end
 
 local function fetch()
     local os_type = os_family()
-    if os_type == "unix" then
+    if os_type == "unix-like" then
         if isdir("/rc") and isdir("/rio") and exists("/bin/rc") then -- Is Plan9?
             kernel = opencmd("/bin/ape/uname")
             local fetch = {
@@ -351,6 +351,18 @@ local function ascii(info)
         --   /  \  
         --  / .. \ 
         -- /.'  '.\
+        return ascii
+    elseif string.lower(info.os):find("artix") then
+        local ascii = {
+            CYAN .. "    /\\           " .. NOCOL,
+            CYAN .. "   /_ \\          " .. NOCOL,
+            CYAN .. "  /  '_\\         " .. NOCOL,
+            CYAN .. " /.-'¯-.\\        " .. NOCOL
+        }
+        --    /\     
+        --   /_ \  
+        --  /  '_\ 
+        -- /.-'¯-.\
         return ascii
     elseif string.lower(info.os):find("gentoo") then
         local ascii = {
