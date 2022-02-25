@@ -51,13 +51,13 @@ local function exists(file)
     local ok, err, code = os.rename(file, file)
     return ok or code == 13, err
 end
-
+-- Checks if a path exists
 local function isdir(path)
     return exists(path.."/")
 end
 
 
-
+-- Opens a command and returns the output
 local function opencmd(cmd)
     local command = io.popen(cmd, "r")
     local command_output = command:read("*a")
@@ -66,7 +66,7 @@ local function opencmd(cmd)
     return command_output
 end
 
-
+-- Get massive os family
 local function os_family()
     local os_family = package.config:sub(1,1)
     if os_family == "/" then
@@ -76,20 +76,32 @@ local function os_family()
     end
 end
 
-local function shell()
-    -- local does_proc_exist = isdir("/proc")
-    --if does_proc_exist then
-    --    return opencmd("cat /proc/$$/comm")
-    --else
-        return opencmd("basename $SHELL")
-    --end
-end
-
 local function linux_bsd_wm()
-    local graphic_session = os.getenv("XDG_SESSION_TYPE")
+    local graphic_session = os.getenv("XDG_SESSION_TYPE") -- Get graphic session
     if graphic_session then
         if graphic_session:lower() == "x11" then
-            return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
+            local wm_pid_command = io.popen("ps -e")
+            local wm_pids = wm_pid_command:read("*a")
+            wm_pid_command:close()
+            local non_ewmh_x11_wm_list = {
+                "sowm" ,
+                "catwm" ,
+                "fvwm" ,
+                "dwm" ,
+                "2bwm" ,
+                "monsterwm" ,
+                "tinywm" ,
+                "vswm",
+                "x11fs" ,
+                "xmonad"
+            }
+            for i=1,#non_ewmh_x11_wm_list do
+                if wm_pids:find(non_ewmh_x11_wm_list[i]) then
+                    wm = non_ewmh_x11_wm_list[i]
+                    break
+                end
+            end
+            return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]]) or wm
         elseif graphic_session:lower() == "wayland" then
             local wm_pid_command = io.popen("ps -e")
             local wm_pids = wm_pid_command:read("*a"):lower()
@@ -136,6 +148,7 @@ local function linux_bsd_wm()
                 return wm or os.getenv("WAYLAND_DISPLAY") or error(":v")
             end
         else
+            -- Return unknown if there is a graphic session but the WM is not found
             return "unknown"
         end
     else
@@ -176,7 +189,6 @@ local function windows_wm()
         "blackbox",
         "emerge",
         "litestep",
-        "explorer"
     }
     for i=1,#windows_wm_list do
         if wm_pids:find(windows_wm_list[i]) then
@@ -184,7 +196,7 @@ local function windows_wm()
             break
         end
     end
-    return wm or error("HOW")
+    return wm or "explorer" or error("HOW")
 end
 
 local function windows_version()
@@ -204,23 +216,20 @@ end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix" then
-        if exists("/rc") then -- Is Plan9?
-            os_name = opencmd("/bin/ape/uname")
+        if isdir("/rc") and isdir("/rio") and exists("/bin/rc") then -- Is Plan9?
+            kernel = opencmd("/bin/ape/uname")
             local fetch = {
-                os = os_name,
+                os = 'Plan9',
                 wm = 'rio',
-                kn = 'Plan9',
+                kn = kernel,
                 sh = 'rc'
             }
             return fetch
         else
             -- Get Kernel name
             kern = opencmd("uname")
-
             -- Get Kernel release
             kern_release = opencmd("uname -r")
-
-
             -- Check if the kernel is linux, macos, bsd or other
             if kern:lower() == "linux" then
                 -- Get OS Name (not distro!)
@@ -230,7 +239,7 @@ local function fetch()
                         os = "Android",
                         wm = "AndroidWM",
                         kn = kern .. kern_release,
-                        sh = shell()
+                        sh = opencmd("basename $SHELL")
                     }
                     return fetch
 
@@ -239,7 +248,7 @@ local function fetch()
                         os = distro(),
                         wm = linux_bsd_wm(),
                         kn = kern .. " " .. kern_release,
-                        sh = shell()
+                        sh = opencmd("basename $SHELL")
                     }
                     return fetch
                 else
@@ -256,7 +265,7 @@ local function fetch()
                     os = "Mac Os",
                     wm = macos_wm(),
                     kn = kern .. " " .. kern_release,
-                    sh = shell()
+                    sh = opencmd("basename $SHELL")
                 }
                 return fetch
             elseif kern:lower():find("mingw64") then
@@ -264,12 +273,20 @@ local function fetch()
                     os = "Windows (mingw)",
                     wm = windows_wm(),
                     kn = "mingw64",
-                    sh = shell()
+                    sh = opencmd("basename $SHELL")
                 }
                 return fetch
             elseif kern:lower():find("bsd") then
                 local fetch = {
                     os = os_name,
+                    wm = linux_bsd_wm(),
+                    kn = kern .. kern_release,
+                    sh = opencmd("basename $SHELL")
+                }
+                return fetch
+            elseif kern:lower():find("haiku") then
+                local fetch = {
+                    os = "Haiku",
                     wm = linux_bsd_wm(),
                     kn = kern .. kern_release,
                     sh = opencmd("basename $SHELL")
@@ -427,10 +444,22 @@ local function ascii(info)
             GREEN .. '/  O   O  \\   ' .. NOCOL,
             GREEN .. '|_________|   ' .. NOCOL
         }
-        --   \  _  /    
-        --  .-"" ""-.    
-        -- /  O   O  \
-        -- |_________|   
+        --   \  _  /      
+        --  .-"" ""-.     
+        -- /  O   O  \    
+        -- |_________|    
+        return ascii
+    elseif string.lower(info.os):find("haiku") then
+        local ascii = {
+            NOCOL .. "| |    |" .. GREEN .. "." .. NOCOL .. "|      " .. NOCOL,
+            NOCOL .. "| |" .. GREEN .."_-''.'" .. NOCOL .. "|      " .. NOCOL,
+            NOCOL .. "|" .. GREEN .. ".-__-'" .. NOCOL .. "| |      " .. NOCOL,
+            NOCOL .. "| |    | |      " .. NOCOL
+        }
+        --| |    |.|      
+        --| |_-''.'|      
+        --|.-__-'| |      
+        --| |    | |      
         return ascii
     else -- AKA unknown
         math.randomseed(os.time())
