@@ -9,6 +9,11 @@ Written mainly in Lua, it is a generic fetch that works everywhere, even on wind
 The only dependencies are Lua and xprop, but xprop is required only on x11 systems, meaning that you dont need it for android, MacOs, windows and wayland systems. Also Xprop is usually preinstalled, but double-checking never hurts :)
 
 ## Installation
+Download the package:
+```
+luarocks install swef
+```
+
 #### Linux
 use the makefile:
 ```
