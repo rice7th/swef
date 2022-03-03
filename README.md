@@ -47,6 +47,8 @@ C:\path\to\batch_file.bat
 ```
 also note that you can move the batchfile into C:\Program Files\swef\ and it will run as a program
 
+replace lua53 with your current lua version: e.g.  if you have lua 5.4 installed, replace `lua53` with `lua54`
+
 ## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
 
