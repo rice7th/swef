@@ -11,8 +11,9 @@ The only dependencies are Lua and xprop, but xprop is required only on x11 syste
 ## Installation
 Download the package:
 ```
-luarocks install swef
+git clone https://github.com/JhonnyRice/swef
 ```
+Then build it in these ways, depending on the system:
 
 #### Linux
 use the makefile:
@@ -27,15 +28,24 @@ sudo make install
 ```
 #### Android
 ```
-chmod +x ./swef.lua
-cp ./swef.lua /data/data/com.termux/files/usr/bin
+chmod +x src/swef
+cp src/swef /data/data/com.termux/files/usr/bin
 ```
 
 #### Windows
 run the file every time you want to use it i think
 ```
-lua<version> C:\path\to\swef.lua
+lua53 C:\path\to\swef
+``` 
+or use a batch file idk
+```batch
+lua53 C:\path\to\swef
 ```
+and then run the batch file:
+```
+C:\path\to\batch_file.bat
+```
+also note that you can move the batchfile into C:\Program Files\swef\ and it will run as a program
 
 ## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
