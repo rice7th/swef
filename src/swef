@@ -328,7 +328,7 @@ end
    =============== ]]
 
 local function ascii(info)
-    if string.lower(info.os):find("ubuntu") then
+    if info.os:lower():find("ubuntu") then
         local ascii = {
             YELLOW .. "  /-".. B_RED .."'-" .. RED .. "( )       " .. NOCOL,
             B_RED .. "( )    |        " .. NOCOL,
@@ -340,7 +340,7 @@ local function ascii(info)
         --   \-.-( )       
         --
         return ascii
-    elseif string.lower(info.os):find("arch") then
+    elseif info.os:lower():find("arch") then
         local ascii = {
             CYAN .. "   /\\           " .. NOCOL,
             CYAN .. "  /\\ \\          " .. NOCOL,
@@ -352,7 +352,7 @@ local function ascii(info)
         --  / .. \ 
         -- /.'  '.\
         return ascii
-    elseif string.lower(info.os):find("artix") then
+    elseif info.os:lower():find("artix") then
         local ascii = {
             CYAN .. "    /\\           " .. NOCOL,
             CYAN .. "   /_ \\          " .. NOCOL,
@@ -364,7 +364,7 @@ local function ascii(info)
         --  /  '_\ 
         -- /.-'¯-.\
         return ascii
-    elseif string.lower(info.os):find("gentoo") then
+    elseif info.os:lower():find("gentoo") then
         local ascii = {
             B_GRAY .. " ,--.           " .. NOCOL,
             B_GRAY .. "( () \\          " .. NOCOL,
@@ -376,7 +376,7 @@ local function ascii(info)
         --  `^  /          
         --   '~'           
         return ascii
-    elseif string.lower(info.os):find("fedora") then
+    elseif info.os:lower():find("fedora") then
         local ascii = {
             BLUE .. "   /¯¯\\         " .. NOCOL,
             BLUE .. " __|__          " .. NOCOL,
@@ -388,7 +388,7 @@ local function ascii(info)
         -- /  T            
         -- \__/           
         return ascii
-    elseif string.lower(info.os):find("debian") then
+    elseif info.os:lower():find("debian") then
         local ascii = {
             RED .. "  _.._        " .. NOCOL,
             RED .. " (    |       " .. NOCOL,
@@ -400,7 +400,7 @@ local function ascii(info)
         -- | (_/        
         --  \          
         return ascii
-    elseif string.lower(info.os):find("alpine") then
+    elseif info.os:lower():find("alpine") then
         local ascii = {
             BLUE .. " /¯¯¯¯¯¯\\       " .. NOCOL,
             BLUE .. "/  " .. WHITE .. "/\\/\\" .. BLUE .. "  \\      " .. NOCOL,
@@ -412,7 +412,7 @@ local function ascii(info)
         -- \ /  \ \ /
         --  \______/
         return ascii
-    elseif string.lower(info.os):find("void") then
+    elseif info.os:lower():find("void") then
         local ascii = {
             B_GREEN .. "   .''-.        " .. NOCOL,
             GREEN .. "/'. " .. B_GREEN .. "_'. \\       " .. NOCOL,
@@ -424,8 +424,29 @@ local function ascii(info)
         --\ '.¯ './
         -- '-..'
         return ascii
-    
-    elseif string.lower(info.os):find("windows") then
+    elseif info.os:lower():find("slackware") then
+        local ascii = {
+            BLUE .. "   .___       " .. NOCOL,
+            BLUE .. "   |___       " .. NOCOL,
+            BLUE .. "   ___|       " .. NOCOL,
+            BLUE .. " |____        " .. NOCOL
+        }
+        --   .___
+        --   |___
+        --   ___|
+        -- |____
+    elseif info.os:lower():find("plan9") then -- No color because RC does not support colors :(
+        local ascii = {
+            "  .-'_'-.        " ,
+            " /  |_|  \\       ",
+            " \\   _|  /       ",
+            "  '-. .-'        " 
+        }
+        --  .-'_'-.
+        -- /  |_|  \
+        -- \   _|  /
+        --  '-. .-'
+    elseif info.os:lower():find("windows") then
         local ascii = {
             CYAN .. '|"""---....     ' .. NOCOL,
             CYAN .. '|____|____|     ' .. NOCOL,
@@ -437,7 +458,7 @@ local function ascii(info)
         --|    T    |     
         --|...---"""'     
         return ascii
-    elseif string.lower(info.os):find("mac os") then -- This one's kinda ugly :(
+    elseif info.os:lower():find("mac os") then -- This one's kinda ugly :(
         local ascii = {
             RED .. '  __()_         ' .. NOCOL,
             YELLOW .. ".'     '.       " .. NOCOL,
@@ -449,7 +470,7 @@ local function ascii(info)
         -- |      (       
         -- '._____.'      
         return ascii
-    elseif string.lower(info.os):find("android") then
+    elseif info.os:lower():find("android") then
         local ascii = {
             GREEN .. '  \\  _  /     ' .. NOCOL,
             GREEN .. ' .-"" ""-.    ' .. NOCOL,
@@ -461,7 +482,7 @@ local function ascii(info)
         -- /  O   O  \    
         -- |_________|    
         return ascii
-    elseif string.lower(info.os):find("haiku") then
+    elseif info.os:lower():find("haiku") then
         local ascii = {
             NOCOL .. "| |    |" .. GREEN .. "." .. NOCOL .. "|      " .. NOCOL,
             NOCOL .. "| |" .. GREEN .."_-''.'" .. NOCOL .. "|      " .. NOCOL,
