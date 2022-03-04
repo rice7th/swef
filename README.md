@@ -68,19 +68,27 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] Windows 10 Pro (Metro, ??, Explorer)
 - [x] Android 9 (Material, ??, are there WMs for android?)
 - [x] MacOS Big Sur (Aero, Quartz, Quartz Compositor)
+- [x] Haiku (??, ??, ??)
+- [x] FreeBSD (none, tty, none)
 
 Places to test:
-- [ ] Any BSD (freeBSD kinda works)
+- [ ] OtherBSDs
 - [ ] Older Windows versions
+- [ ] Plan 9 (Should work)
 
 Places where it does NOT work:
-- [ ] Plan 9
+- [ ] AIX
+- [ ] MINIX
+- [ ] IRIX
+- [ ] FreeMiNT
+- [ ] Inferno
+- [ ] BeOS (original)
 
 For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
 If your os is not supported (e.g. no ascii available or the os is not recognised) you can enjoy a cute cat art that changes breeed randomly as a replacement. If you REALLY want a new ascii art for your system, then please submit a github issue.
 ## Features
 - [x] OS name
-- [x] Window Manager (Non EWMH wm's are comin!)
+- [x] Window Manager ~(Non EWMH wm's are comin!)~ Non EWMH linux wm's are here, plus MacOS and Windows WM's support!
 - [x] Kernel
 - [x] Shell ~(bugged :v)~ fixed 👌
 
@@ -94,7 +102,7 @@ Maybe in the future:
 ## Dependences
 Lua: https://www.lua.org/download.html
 
-xprop
+xprop (dunno)
 
 Thats it.
 
