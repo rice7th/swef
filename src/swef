@@ -283,7 +283,7 @@ local function fetch()
             elseif kern:lower():find("haiku") then -- Haiku, aka OpenBeOS
                 local fetch = {
                     os = "Haiku",
-                    wm = linux_bsd_wm(),
+                    wm = "default",
                     kn = kern .. kern_release,
                     sh = opencmd("basename $SHELL")
                 }
