@@ -213,10 +213,20 @@ local function distro()
     return distro
 end
 
+local function shell()
+    local is_the_global_variable_set = os.getenv("SHELL")
+    if not is_the_global_variable_set then
+        return "sh"
+    elseif exists("/usr/bin/basename") then
+        return opencmd("basename $SHELL")
+    else
+        return "sh"
+    end
+end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix-like" then
-        if isdir("/rc") and isdir("/bin/ape") and exists("/bin/rc") then -- Is Plan9?
+        if isdir("/rc") and isdir("/bin/ape") and exists("/bin/ape/uname") then -- Is Plan9?
             kernel = opencmd("/bin/ape/uname")
             local fetch = {
                 os = 'Plan9',
@@ -240,7 +250,7 @@ local function fetch()
                         os = "Android",
                         wm = "AndroidWM",
                         kn = kern .. kern_release,
-                        sh = opencmd("basename $SHELL")
+                        sh = shell()
                     }
                     return fetch
 
@@ -249,7 +259,7 @@ local function fetch()
                         os = distro(),
                         wm = linux_bsd_wm(),
                         kn = kern .. " " .. kern_release,
-                        sh = opencmd("basename $SHELL")
+                        sh = shell()
                     }
                     return fetch
                 end
@@ -259,7 +269,7 @@ local function fetch()
                     os = "Mac Os",
                     wm = macos_wm(),
                     kn = kern .. " " .. kern_release,
-                    sh = opencmd("basename $SHELL")
+                    sh = shell()
                 }
                 return fetch
 
@@ -268,7 +278,7 @@ local function fetch()
                     os = "Windows (mingw)",
                     wm = windows_wm(),
                     kn = "mingw64",
-                    sh = opencmd("basename $SHELL")
+                    sh = shell()
                 }
                 return fetch
             elseif kern:lower():find("bsd") then -- BSDs (FreeBSD, OpenBSD, NetBSD etc...). They work similarly to Linux
@@ -276,7 +286,7 @@ local function fetch()
                     os = os_name,
                     wm = linux_bsd_wm(),
                     kn = kern .. kern_release,
-                    sh = opencmd("basename $SHELL")
+                    sh = shell()
                 }
                 return fetch
 
@@ -285,7 +295,7 @@ local function fetch()
                     os = "Haiku",
                     wm = "default",
                     kn = kern .. kern_release,
-                    sh = opencmd("basename $SHELL")
+                    sh = shell()
                 }
                 return fetch
             else
@@ -322,9 +332,7 @@ end
 
 
 --[[ ===============
-
     Ascii art time!
-
    =============== ]]
 
 local function ascii(info)
