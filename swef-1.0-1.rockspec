@@ -1,5 +1,5 @@
 package = "swef"
-version = "1"
+version = "1-2"
 source = {
    url = "git+https://github.com/JhonnyRice/swef.git",
    tag = "1.0"
