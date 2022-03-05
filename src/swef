@@ -583,7 +583,7 @@ SWEF 1.0 - The Should-Work-Everywhere-Fetch
 ===========================================
 usage: lua swef [-h | --help] [-i | --icons] [-n | --no-color]
 --help, -h        Display this message
---icons, -i       Use nerd fonts
+--icons, -i       Use fontawesome icons
 --no-color, -n    Don't display the colors
 
 ]])
