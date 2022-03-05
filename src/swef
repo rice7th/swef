@@ -20,30 +20,39 @@
 ]]
 
 -- COLORS (B_ stands for BRIGHT_)
+local colors = {
+    RED      = "\x1b[31m",
+    GREEN    = "\x1b[32m",
+    YELLOW   = "\x1b[33m",
+    BLUE     = "\x1b[34m",
+    PURPLE   = "\x1b[35m",
+    CYAN     = "\x1b[36m",
 
-local RED    = "\x1b[31m"
-local GREEN  = "\x1b[32m"
-local YELLOW = "\x1b[33m"
-local BLUE   = "\x1b[34m"
-local PURPLE = "\x1b[35m"
-local CYAN   = "\x1b[36m"
+    B_RED    = "\x1b[91m",
+    B_GREEN  = "\x1b[92m",
+    B_YELLOW = "\x1b[93m",
+    B_BLUE   = "\x1b[94m",
+    B_PURPLE = "\x1b[95m",
+    B_CYAN   = "\x1b[96m",
 
-local B_RED    = "\x1b[91m"
-local B_GREEN  = "\x1b[92m"
-local B_YELLOW = "\x1b[93m"
-local B_BLUE   = "\x1b[94m"
-local B_PURPLE = "\x1b[95m"
-local B_CYAN   = "\x1b[96m"
+    -- Monochromatic
+    BLACK    = "\x1b[30m",
+    GRAY     = "\x1b[90m",
+    B_GRAY   = "\x1b[37m",
+    WHITE    = "\x1b[97m",
 
+    -- Remove all colors
+    NOCOL    = "\x1b[0m",
+}
 
--- Monochromatic
-local BLACK  = "\x1b[30m"
-local GRAY   = "\x1b[90m"
-local B_GRAY  = "\x1b[37m"
-local WHITE   = "\x1b[97m"
+-- Fontawesome icons, initialized later: text by default
+local icons = {
+    os_icon = 'os: ',
+    wm_icon = 'wm: ',
+    kn_icon = 'kn: ',
+    sh_icon = 'sh: ',
+}
 
--- Remove all colors
-local NOCOL = "\x1b[0m"
 
 --[[ STOLEN FROM:: https://stackoverflow.com/a/40195356]]
 -- Checks if a file exist
@@ -338,10 +347,10 @@ end
 local function ascii(info)
     if info.os:lower():find("ubuntu") then
         local ascii = {
-            YELLOW .. "  /-".. B_RED .."'-" .. RED .. "( )       " .. NOCOL,
-            B_RED .. "( )    |        " .. NOCOL,
-            YELLOW .. "  \\-".. RED ..".-".. YELLOW .."( )       " .. NOCOL,
-            NOCOL .. "                " .. NOCOL
+            colors.YELLOW .. "  /-".. colors.B_RED .."'-" .. colors.RED .. "( )       " .. colors.NOCOL,
+            colors.B_RED .. "( )    |        " .. colors.NOCOL,
+            colors.YELLOW .. "  \\-".. colors.RED ..".-".. colors.YELLOW .."( )       " .. colors.NOCOL,
+            colors.NOCOL .. "                " .. colors.NOCOL
         }
         --   /-'-( )       
         -- ( )    |        
@@ -350,10 +359,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("arch") then
         local ascii = {
-            CYAN .. "   /\\           " .. NOCOL,
-            CYAN .. "  /\\ \\          " .. NOCOL,
-            CYAN .. " / .. \\         " .. NOCOL,
-            CYAN .. "/.'  '.\\        " .. NOCOL
+            colors.CYAN .. "   /\\           " .. colors.NOCOL,
+            colors.CYAN .. "  /\\ \\          " .. colors.NOCOL,
+            colors.CYAN .. " / .. \\         " .. colors.NOCOL,
+            colors.CYAN .. "/.'  '.\\        " .. colors.NOCOL
         }
         --    /\     
         --   /  \  
@@ -362,10 +371,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("artix") then
         local ascii = {
-            CYAN .. "    /\\           " .. NOCOL,
-            CYAN .. "   /_ \\          " .. NOCOL,
-            CYAN .. "  /  '_\\         " .. NOCOL,
-            CYAN .. " /.-'¯-.\\        " .. NOCOL
+            colors.CYAN .. "    /\\           " .. colors.NOCOL,
+            colors.CYAN .. "   /_ \\          " .. colors.NOCOL,
+            colors.CYAN .. "  /  '_\\         " .. colors.NOCOL,
+            colors.CYAN .. " /.-'¯-.\\        " .. colors.NOCOL
         }
         --    /\     
         --   /_ \  
@@ -374,10 +383,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("gentoo") then
         local ascii = {
-            B_GRAY .. " ,--.           " .. NOCOL,
-            B_GRAY .. "( () \\          " .. NOCOL,
-            B_GRAY .. " `^  /          " .. NOCOL,
-            B_GRAY .. "  '~'           " .. NOCOL
+            colors.B_GRAY .. " ,--.           " .. colors.NOCOL,
+            colors.B_GRAY .. "( () \\          " .. colors.NOCOL,
+            colors.B_GRAY .. " `^  /          " .. colors.NOCOL,
+            colors.B_GRAY .. "  '~'           " .. colors.NOCOL
         }
         --  ,--.           
         -- ( () \          
@@ -386,10 +395,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("fedora") then
         local ascii = {
-            BLUE .. "   /¯¯\\         " .. NOCOL,
-            BLUE .. " __|__          " .. NOCOL,
-            BLUE .. "/  T            " .. NOCOL,
-            BLUE .. "\\__/            " .. NOCOL
+            colors.BLUE .. "   /¯¯\\         " .. colors.NOCOL,
+            colors.BLUE .. " __|__          " .. colors.NOCOL,
+            colors.BLUE .. "/  T            " .. colors.NOCOL,
+            colors.BLUE .. "\\__/            " .. colors.NOCOL
         }
         --    /¯¯\        
         --  __|__          
@@ -398,10 +407,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("debian") then
         local ascii = {
-            RED .. "  _.._        " .. NOCOL,
-            RED .. " (    |       " .. NOCOL,
-            RED .. " | (_/        " .. NOCOL,
-            RED .. "  \\           " .. NOCOL
+            colors.RED .. "  _.._        " .. colors.NOCOL,
+            colors.RED .. " (    |       " .. colors.NOCOL,
+            colors.RED .. " | (_/        " .. colors.NOCOL,
+            colors.RED .. "  \\           " .. colors.NOCOL
         }
         --  _.._        
         -- (    |       
@@ -410,10 +419,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("alpine") then
         local ascii = {
-            BLUE .. " /¯¯¯¯¯¯\\       " .. NOCOL,
-            BLUE .. "/  " .. WHITE .. "/\\/\\" .. BLUE .. "  \\      " .. NOCOL,
-            BLUE .. "\\ " .. WHITE .. "/  \\ \\" .. BLUE .. " /      " .. NOCOL,
-            BLUE .. " \\______/       " .. NOCOL
+            colors.BLUE .. " /¯¯¯¯¯¯\\       " .. colors.NOCOL,
+            colors.BLUE .. "/  " .. colors.WHITE .. "/\\/\\" .. colors.BLUE .. "  \\      " .. colors.NOCOL,
+            colors.BLUE .. "\\ " .. colors.WHITE .. "/  \\ \\" .. colors.BLUE .. " /      " .. colors.NOCOL,
+            colors.BLUE .. " \\______/       " .. colors.NOCOL
         }
         --  /¯¯¯¯¯¯\
         -- /  /\/\  \      
@@ -422,10 +431,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("void") then
         local ascii = {
-            B_GREEN .. "   .''-.        " .. NOCOL,
-            GREEN .. "/'. " .. B_GREEN .. "_'. \\       " .. NOCOL,
-            GREEN .. "\\ '.".. B_GREEN .. "¯ './       " .. NOCOL,
-            GREEN .. " '-..'          " .. NOCOL
+            colors.B_GREEN .. "   .''-.        " .. colors.NOCOL,
+            colors.GREEN .. "/'. " .. colors.B_GREEN .. "_'. \\       " .. colors.NOCOL,
+            colors.GREEN .. "\\ '.".. colors.B_GREEN .. "¯ './       " .. colors.NOCOL,
+            colors.GREEN .. " '-..'          " .. colors.NOCOL
         }
         --   .''-.
         --/'. _'. \
@@ -434,16 +443,16 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("slackware") then
         local ascii = {
-            BLUE .. "   .___       " .. NOCOL,
-            BLUE .. "   |___       " .. NOCOL,
-            BLUE .. "   ___|       " .. NOCOL,
-            BLUE .. " |____        " .. NOCOL
+            colors.BLUE .. "   .___       " .. colors.NOCOL,
+            colors.BLUE .. "   |___       " .. colors.NOCOL,
+            colors.BLUE .. "   ___|       " .. colors.NOCOL,
+            colors.BLUE .. " |____        " .. colors.NOCOL
         }
         --   .___
         --   |___
         --   ___|
         -- |____
-    elseif info.os:lower():find("plan9") then -- No color because RC does not support colors :(
+    elseif info.os:lower():find("plan9") then -- No color because RC (Plan9's shell) does not support colors :(
         local ascii = {
             "  .-'_'-.        " ,
             " /  |_|  \\       ",
@@ -456,10 +465,10 @@ local function ascii(info)
         --  '-. .-'
     elseif info.os:lower():find("windows") then
         local ascii = {
-            CYAN .. '|"""---....     ' .. NOCOL,
-            CYAN .. '|____|____|     ' .. NOCOL,
-            CYAN .. '|    T    |     ' .. NOCOL,
-            CYAN .. '|...---"""\'     ' .. NOCOL
+            colors.CYAN .. '|"""---....     ' .. colors.NOCOL,
+            colors.CYAN .. '|____|____|     ' .. colors.NOCOL,
+            colors.CYAN .. '|    T    |     ' .. colors.NOCOL,
+            colors.CYAN .. '|...---"""\'     ' .. colors.NOCOL
         }
         --|"""---....     
         --|____|____|     
@@ -468,10 +477,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("mac os") then -- This one's kinda ugly :(
         local ascii = {
-            RED .. '  __()_         ' .. NOCOL,
-            YELLOW .. ".'     '.       " .. NOCOL,
-            GREEN .. '|      (        ' .. NOCOL,
-            CYAN .. "'._____.'       " .. NOCOL
+            colors.RED    .. '  __()_         ' .. colors.NOCOL,
+            colors.YELLOW .. ".'     '.       " .. colors.NOCOL,
+            colors.GREEN  .. '|      (        ' .. colors.NOCOL,
+            colors.CYAN   .. "'._____.'       " .. colors.NOCOL
         }
         --   __()_        
         -- .'     '.      
@@ -480,10 +489,10 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("android") then
         local ascii = {
-            GREEN .. '  \\  _  /     ' .. NOCOL,
-            GREEN .. ' .-"" ""-.    ' .. NOCOL,
-            GREEN .. '/  O   O  \\   ' .. NOCOL,
-            GREEN .. '|_________|   ' .. NOCOL
+            colors.GREEN .. '  \\  _  /     ' .. colors.NOCOL,
+            colors.GREEN .. ' .-"" ""-.    ' .. colors.NOCOL,
+            colors.GREEN .. '/  O   O  \\   ' .. colors.NOCOL,
+            colors.GREEN .. '|_________|   ' .. colors.NOCOL
         }
         --   \  _  /      
         --  .-"" ""-.     
@@ -492,49 +501,50 @@ local function ascii(info)
         return ascii
     elseif info.os:lower():find("haiku") then
         local ascii = {
-            NOCOL .. "| |    |" .. GREEN .. "." .. NOCOL .. "|      " .. NOCOL,
-            NOCOL .. "| |" .. GREEN .."_-''.'" .. NOCOL .. "|      " .. NOCOL,
-            NOCOL .. "|" .. GREEN .. ".-__-'" .. NOCOL .. "| |      " .. NOCOL,
-            NOCOL .. "| |    | |      " .. NOCOL
+            colors.NOCOL .. "| |    |" .. colors.GREEN .. "." .. colors.NOCOL .. "|      " .. colors.NOCOL,
+            colors.NOCOL .. "| |" .. colors.GREEN .."_-''.'" .. colors.NOCOL .. "|      " .. colors.NOCOL,
+            colors.NOCOL .. "|" .. colors.GREEN .. ".-__-'" .. colors.NOCOL .. "| |      " .. colors.NOCOL,
+            colors.NOCOL .. "| |    | |      " .. colors.NOCOL
         }
         --| |    |.|      
         --| |_-''.'|      
         --|.-__-'| |      
         --| |    | |      
         return ascii
+
     else -- AKA unknown / Not supported yet
         math.randomseed(os.time())
         randomness = math.random()
         if randomness >= 0 and randomness <= 0.25 then -- Orange Cat
             local ascii = {
-                B_RED .. "  /'._         " .. NOCOL,
-                B_RED .. " (" .. B_GREEN .. "° o" .. B_RED .. " 7        " .. NOCOL,
-                B_RED .. "  " ..YELLOW.. "|" .. B_RED .. "'-'".. YELLOW .."\"~.  .   " .. NOCOL,
-                B_RED .. "  Uu" .. YELLOW .. "^~" .. B_RED .. "C_J._.\"  " .. NOCOL
+                colors.B_RED .. "  /'._         " .. colors.NOCOL,
+                colors.B_RED .. " (" .. colors.B_GREEN .. "°" .. colors.CYAN .. " o" .. colors.B_RED .. " 7        " .. colors.NOCOL,
+                colors.B_RED .. "  " ..colors.YELLOW.. "|" .. colors.B_RED .. "'-'".. colors.YELLOW .."\"~.  .   " .. colors.NOCOL,
+                colors.B_RED .. "  Uu" .. colors.YELLOW .. "^~" .. colors.B_RED .. "C_J._.\"  " .. colors.NOCOL
             }
             return ascii
         elseif randomness >= 0.25 and randomness <= 0.5 then -- Black Cat
             local ascii = {
-                BLACK .. "  /'._         " .. NOCOL,
-                BLACK .. " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
-                BLACK .. "  |'-'\"~.  .   " .. NOCOL,
-                BLACK .. "  Uu^~C_J._.\"  " .. NOCOL
+                colors.BLACK .. "  /'._         " .. colors.NOCOL,
+                colors.BLACK .. " (" .. colors.GREEN .. "° o" .. colors.BLACK .. " 7        " .. colors.NOCOL,
+                colors.BLACK .. "  |'-'\"~.  .   " .. colors.NOCOL,
+                colors.BLACK .. "  Uu^~C_J._.\"  " .. colors.NOCOL
             }
             return ascii
         elseif randomness >= 0.5 and randomness <= 0.75 then -- Calico Cat
             local ascii = {
-                B_RED .. "  /'." .. BLACK .. "_         " .. NOCOL,
-                " (" .. GREEN .. "° o" .. BLACK .. " 7        " .. NOCOL,
-                "  " .. BLACK .. "|".. WHITE .."'-'\"".. B_RED .."~.  .   " .. NOCOL,
-                "  " .. BLACK .. "U" .. WHITE .. "u^" .. B_RED .. "~C_J" .. WHITE .. "._.\"  " .. NOCOL
+                colors.B_RED .. "  /'." .. colors.BLACK .. "_         " .. colors.NOCOL,
+                " (" .. colors.GREEN .. "° o" .. colors.BLACK .. " 7        " .. colors.NOCOL,
+                "  " .. colors.BLACK .. "|".. colors.WHITE .."'-'\"".. colors.B_RED .."~.  .   " .. colors.NOCOL,
+                "  " .. colors.BLACK .. "U" .. colors.WHITE .. "u^" .. colors.B_RED .. "~C_J" .. colors.WHITE .. "._.\"  " .. colors.NOCOL
             }
             return ascii
         else -- if you get more than 0.75 you unlock my cat (his name is Sun and he's a tabby cat)
-            local ascii = {
-                BLACK .. "  /'._         " .. NOCOL,
-                BLACK .. " (" .. YELLOW .. "° o " .. WHITE .. "7        " .. NOCOL,
-                GRAY .. "  |"..WHITE.."'-'".. GRAY .."\"".. BLACK .."~.  .   " .. NOCOL,
-                "  Uu^~C_J." .. YELLOW .. "_"..GRAY.."."..YELLOW.."\"  " .. NOCOL
+            local ascii = { -- what a mess...
+                colors.BLACK .. "  /'._         " .. colors.NOCOL,
+                colors.BLACK .. " (" .. colors.YELLOW .. "° o " .. colors.WHITE .. "7        " .. colors.NOCOL,
+                colors.GRAY .. "  |".. colors.WHITE .."'-'".. colors.GRAY .."\"".. colors.BLACK .."~.  .   " .. colors.NOCOL,
+                "  Uu^~C_J." .. colors.YELLOW .. "_".. colors.GRAY ..".".. colors.YELLOW .."\"  " .. colors.NOCOL
             }
             return ascii
         end
@@ -547,34 +557,62 @@ local function ascii(info)
     
 end
 
+
 --[[ INITIALIZZATION ]]
-
-
+local info = fetch() -- Initialize sys info
+-- local art = ascii(info) -- Disabled HERE because if this is declared BEFORE -n | --no-color flag is checked this will be always colored
+-- Re-enabled on needed
 if not arg[1] then
-    local info = fetch()
-    art = ascii(info)
-
-    io.write(art[1] .. RED    .. "os: " .. NOCOL .. info.os .. "\n")
-    io.write(art[2] .. YELLOW .. "wm: " .. NOCOL .. info.wm .. "\n")
-    io.write(art[3] .. GREEN  .. "kn: " .. NOCOL .. info.kn .. "\n")
-    io.write(art[4] .. CYAN   .. "sh: " .. NOCOL .. info.sh .. "\n")
-
-elseif arg[1] == "--icons" or arg[1] == "-i" then
-    local info = fetch()
-    art = ascii(info)
-
-    io.write(art[1] .. RED    .. "\u{f05a}  " .. NOCOL .. info.os .. "\n")
-    io.write(art[2] .. YELLOW .. "\u{f2d0}  " .. NOCOL .. info.wm .. "\n")
-    io.write(art[3] .. GREEN  .. "\u{f085}  " .. NOCOL .. info.kn .. "\n")
-    io.write(art[4] .. CYAN   .. "\u{e795}  " .. NOCOL .. info.sh .. "\n")
-elseif arg[1] == "--help" or arg[1] == "-h" then
-    io.write([[
+    local art = ascii(info)
+    io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
+    io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
+    io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
+    io.write(art[4] .. colors.CYAN   .. icons.sh_icon .. colors.NOCOL .. info.sh .. "\n")
+else
+    for i=1,#arg,1 do
+        
+        if arg[i] == "--icons" or arg[i] == "-i" then
+            icons.os_icon = "\u{f05a}  "
+            icons.wm_icon = "\u{f2d0}  "
+            icons.kn_icon = "\u{f085}  "
+            icons.sh_icon = "\u{e795}  "
+            
+        elseif arg[i] == "--help" or arg[i] == "-h" then
+                io.write([[
 SWEF 1.0 - The Should-Work-Everywhere-Fetch
--------------------------------------------
-usage: lua swef.lua [-h | --help] [-i | --icons]
+===========================================
+usage: lua swef [-h | --help] [-i | --icons] [-n | --no-color]
 --help, -h        Display this message
 --icons, -i       Use nerd fonts
-    ]])
-else
-    io.write("Unknown option!\nuse -h or --help to view all the options")
+--no-color, -n    Don't display the colors
+
+]])
+            
+        elseif arg[i] == "--no-color" or arg[i] == "-n" then
+            colors.RED      = ''
+            colors.GREEN    = ''
+            colors.YELLOW   = ''
+            colors.BLUE     = ''
+            colors.PURPLE   = ''
+            colors.CYAN     = ''
+            colors.B_RED    = ''
+            colors.B_GREEN  = ''
+            colors.B_YELLOW = ''
+            colors.B_BLUE   = ''
+            colors.B_PURPLE = ''
+            colors.B_CYAN   = ''
+            colors.BLACK    = ''
+            colors.GRAY     = ''
+            colors.B_GRAY   = ''
+            colors.WHITE    = ''
+            colors.NOCOL    = ''
+        end
+    end
+    
+    local art = ascii(info)
+
+    io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
+    io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
+    io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
+    io.write(art[4] .. colors.CYAN   .. icons.sh_icon .. colors.NOCOL .. info.sh .. "\n")
 end

@@ -1,8 +1,8 @@
 package = "swef"
-version = "1-2"
+version = "1-3"
 source = {
    url = "git+https://github.com/JhonnyRice/swef.git",
-   tag = "1.0"
+   tag = "1.3"
 }
 description = {
    summary = "The Should Work Everywhere Fetch",
@@ -23,6 +23,10 @@ description = {
       
       OSes where is SHOULD work:
       - Plan9/9Front
+
+      NOT tested OSes:
+      - BeOS
+      - AmigaOS
    ]],
    homepage = "https://github.com/JhonnyRice/swef",
    license = "MIT"
