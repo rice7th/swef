@@ -572,10 +572,10 @@ else
     for i=1,#arg,1 do
         
         if arg[i] == "--icons" or arg[i] == "-i" then
-            icons.os_icon = "\u{f05a}  "
+            icons.os_icon = "\u{f013}  "
             icons.wm_icon = "\u{f2d0}  "
-            icons.kn_icon = "\u{f085}  "
-            icons.sh_icon = "\u{e795}  "
+            icons.kn_icon = "\u{f005}  "
+            icons.sh_icon = "\u{f120}  "
             
         elseif arg[i] == "--help" or arg[i] == "-h" then
                 io.write([[
