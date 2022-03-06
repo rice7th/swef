@@ -19,6 +19,7 @@
     SOFTWARE.
 ]]
 
+
 -- COLORS (B_ stands for BRIGHT_)
 local colors = {
     RED      = "\x1b[31m",
@@ -258,7 +259,7 @@ local function fetch()
                     local fetch = {
                         os = "Android",
                         wm = "AndroidWM",
-                        kn = kern .. kern_release,
+                        kn = kern .. " " .. kern_release,
                         sh = shell()
                     }
                     return fetch
@@ -294,7 +295,7 @@ local function fetch()
                 local fetch = {
                     os = os_name,
                     wm = linux_bsd_wm(),
-                    kn = kern .. kern_release,
+                    kn = kern .. " " .. kern_release,
                     sh = shell()
                 }
                 return fetch
@@ -303,7 +304,7 @@ local function fetch()
                 local fetch = {
                     os = "Haiku",
                     wm = "default",
-                    kn = kern .. kern_release,
+                    kn = kern .. " " .. kern_release,
                     sh = shell()
                 }
                 return fetch
@@ -559,60 +560,62 @@ end
 
 
 --[[ INITIALIZZATION ]]
-local info = fetch() -- Initialize sys info
--- local art = ascii(info) -- Disabled HERE because if this is declared BEFORE -n | --no-color flag is checked this will be always colored
--- Re-enabled on needed
-if not arg[1] then
-    local art = ascii(info)
-    io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
-    io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
-    io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
-    io.write(art[4] .. colors.CYAN   .. icons.sh_icon .. colors.NOCOL .. info.sh .. "\n")
-else
-    for i=1,#arg,1 do
-        
-        if arg[i] == "--icons" or arg[i] == "-i" then
-            icons.os_icon = "\u{f013}  "
-            icons.wm_icon = "\u{f2d0}  "
-            icons.kn_icon = "\u{f005}  "
-            icons.sh_icon = "\u{f120}  "
+if pcall(debug.getlocal, 4, 1) then return fetch() else -- Check if file is run as a standalone or is imported
+    local info = fetch() -- Initialize sys info
+    -- local art = ascii(info) -- Disabled HERE because if this is declared BEFORE -n | --no-color flag is checked this will be always colored
+    -- Re-enabled on needed
+    if not arg[1] then
+        local art = ascii(info)
+        io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
+        io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
+        io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
+        io.write(art[4] .. colors.CYAN   .. icons.sh_icon .. colors.NOCOL .. info.sh .. "\n")
+    else
+        for i=1,#arg,1 do
             
-        elseif arg[i] == "--help" or arg[i] == "-h" then
-                io.write([[
-SWEF 1.0 - The Should-Work-Everywhere-Fetch
-===========================================
-usage: lua swef [-h | --help] [-i | --icons] [-n | --no-color]
---help, -h        Display this message
---icons, -i       Use fontawesome icons
---no-color, -n    Don't display the colors
+            if arg[i] == "--icons" or arg[i] == "-i" then
+                icons.os_icon = "\u{f013}  "
+                icons.wm_icon = "\u{f2d0}  "
+                icons.kn_icon = "\u{f005}  "
+                icons.sh_icon = "\u{f120}  "
+                
+            elseif arg[i] == "--help" or arg[i] == "-h" then
+                    io.write([[
+    SWEF 1.0 - The Should-Work-Everywhere-Fetch
+    ===========================================
+    usage: lua swef [-h | --help] [-i | --icons] [-n | --no-color]
+    --help, -h        Display this message
+    --icons, -i       Use fontawesome icons
+    --no-color, -n    Don't display the colors
 
-]])
-            
-        elseif arg[i] == "--no-color" or arg[i] == "-n" then
-            colors.RED      = ''
-            colors.GREEN    = ''
-            colors.YELLOW   = ''
-            colors.BLUE     = ''
-            colors.PURPLE   = ''
-            colors.CYAN     = ''
-            colors.B_RED    = ''
-            colors.B_GREEN  = ''
-            colors.B_YELLOW = ''
-            colors.B_BLUE   = ''
-            colors.B_PURPLE = ''
-            colors.B_CYAN   = ''
-            colors.BLACK    = ''
-            colors.GRAY     = ''
-            colors.B_GRAY   = ''
-            colors.WHITE    = ''
-            colors.NOCOL    = ''
+    ]])
+                
+            elseif arg[i] == "--no-color" or arg[i] == "-n" then
+                colors.RED      = ''
+                colors.GREEN    = ''
+                colors.YELLOW   = ''
+                colors.BLUE     = ''
+                colors.PURPLE   = ''
+                colors.CYAN     = ''
+                colors.B_RED    = ''
+                colors.B_GREEN  = ''
+                colors.B_YELLOW = ''
+                colors.B_BLUE   = ''
+                colors.B_PURPLE = ''
+                colors.B_CYAN   = ''
+                colors.BLACK    = ''
+                colors.GRAY     = ''
+                colors.B_GRAY   = ''
+                colors.WHITE    = ''
+                colors.NOCOL    = ''
+            end
         end
-    end
-    
-    local art = ascii(info)
+        
+        local art = ascii(info)
 
-    io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
-    io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
-    io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
-    io.write(art[4] .. colors.CYAN   .. icons.sh_icon .. colors.NOCOL .. info.sh .. "\n")
+        io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
+        io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
+        io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
+        io.write(art[4] .. colors.CYAN   .. icons.sh_icon .. colors.NOCOL .. info.sh .. "\n")
+    end
 end
