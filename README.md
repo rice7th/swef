@@ -1,4 +1,5 @@
 # swef
+![Maintenance](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
 The Should Work Everywhere Fetch.
 
 ![image](https://user-images.githubusercontent.com/93940240/152065374-8f0b0ede-d2d7-4d94-a502-4368cd1eee56.png)
