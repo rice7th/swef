@@ -68,10 +68,18 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 
 - [x] Alpine Linux 3.15 (none, tty, none)
 ---
+![Void Linux](https://i.imgur.com/PxxPeFM.png)
+
+- [x] Void Linux (none, x11, AwesomeWM)
+---
 - [x] Windows 10 Pro (Metro, ??, Explorer)
 - [x] Android 9 (Material, ??, are there WMs for android?)
 - [x] MacOS Big Sur (Aero, Quartz, Quartz Compositor)
+---
+![Haiku](https://i.imgur.com/rdydTVJ.png)
+
 - [x] Haiku (??, ??, ??)
+---
 - [x] FreeBSD (none, tty, none)
 
 Places to test:
