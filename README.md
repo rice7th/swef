@@ -60,11 +60,11 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 
 - [x] Kubuntu 20.04 (Kde, X11, AwesomeWM)
 ---
-![Fedora](https://imgur.com/a/LUm3nqk.png)
+![Fedora](https://i.imgur.com/tE7kDNY.png)
 
 - [x] Fedora 35 (Gnome, Wayland, Mutter)
 ---
-![Alpine Linux](https://imgur.com/a/U30iDHJ.png)
+![Alpine Linux](https://i.imgur.com/I5uZY5j.png)
 
 - [x] Alpine Linux 3.15 (none, tty, none)
 ---
