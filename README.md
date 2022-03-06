@@ -56,15 +56,15 @@ replace lua53 with your current lua version: e.g.  if you have lua 5.4 installed
 ## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
 
-![Kubuntu](https://imgur.com/a/vcOaZnW)
+![Kubuntu](https://imgur.com/a/vcOaZnW.jpg)
 
 - [x] Kubuntu 20.04 (Kde, X11, AwesomeWM)
 ---
-![Fedora](https://imgur.com/a/LUm3nqk)
+![Fedora](https://imgur.com/a/LUm3nqk.jpg)
 
 - [x] Fedora 35 (Gnome, Wayland, Mutter)
 ---
-![Alpine Linux](https://imgur.com/a/U30iDHJ)
+![Alpine Linux](https://imgur.com/a/U30iDHJ.jpg)
 
 - [x] Alpine Linux 3.15 (none, tty, none)
 ---
