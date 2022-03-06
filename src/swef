@@ -95,6 +95,7 @@ local function linux_bsd_wm()
             wm_pid_command:close()
             local non_ewmh_x11_wm_list = {
                 "sowm" ,
+                "penrose",
                 "catwm" ,
                 "fvwm" ,
                 "dwm" ,
@@ -102,6 +103,7 @@ local function linux_bsd_wm()
                 "monsterwm" ,
                 "tinywm" ,
                 "vswm",
+                "wmaker",
                 "x11fs" ,
                 "xmonad"
             }
@@ -111,7 +113,7 @@ local function linux_bsd_wm()
                     break
                 end
             end
-            return wm or opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]])
+            return wm or opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]]) or 'unknown'
         elseif graphic_session:lower() == "wayland" then
             local wm_pid_command = io.popen("ps -e")
             local wm_pids = wm_pid_command:read("*a"):lower()
