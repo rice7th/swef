@@ -56,7 +56,7 @@ replace lua53 with your current lua version: e.g.  if you have lua 5.4 installed
 ## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
 
-![Kubuntu]((https://i.imgur.com/DVcna4O.png))
+![Kubuntu](https://i.imgur.com/DVcna4O.png)
 
 - [x] Kubuntu 20.04 (Kde, X11, AwesomeWM)
 ---
