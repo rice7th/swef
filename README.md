@@ -78,8 +78,16 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 
 - [x] Void Linux (none, x11, AwesomeWM)
 ---
+![Windows 10](https://i.imgur.com/BVvqYSv.png)
+
 - [x] Windows 10 Pro (Metro, ??, Explorer)
+---
+![Andorid 9](https://i.imgur.com/LHXRThi.png)
+
 - [x] Android 9 (Material, ??, are there WMs for android?)
+
+---
+
 - [x] MacOS Big Sur (Aero, Quartz, Quartz Compositor)
 ---
 ![Haiku](https://i.imgur.com/rdydTVJ.png)
