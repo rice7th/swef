@@ -72,7 +72,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 ---
 ![Alpine Linux](https://i.imgur.com/I5uZY5j.png)
 
-- [x] Alpine Linux 3.15 (none, tty, none)
+- [x] Alpine Linux 3.15 (XFCE, X11, XFWM4)
 ---
 ![Void Linux](https://i.imgur.com/PxxPeFM.png)
 
