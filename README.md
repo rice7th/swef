@@ -87,6 +87,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] Android 9 (Material, ??, are there WMs for android?)
 
 ---
+![MacOS BigSur](https://i.imgur.com/A9ccKWf.png)
 
 - [x] MacOS Big Sur (Aero, Quartz, Quartz Compositor)
 ---
@@ -97,7 +98,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] FreeBSD (none, tty, none)
 
 Places to test:
-- [ ] OtherBSDs
+- [x] OtherBSDs
 - [ ] Older Windows versions
 - [ ] Plan 9 (Should work)
 
@@ -118,11 +119,14 @@ If your os is not supported (e.g. no ascii available or the os is not recognised
 - [x] Shell ~(bugged :v)~ fixed 👌
 
 Maybe in the future:
-- [ ] Hostname
-- [ ] User
-- [ ] CPU
-- [ ] RAM
-- [ ] Disk space
+- [x] Hostname
+- [x] User
+- [x] CPU
+- [x] RAM
+- [x] Disk space
+- [x] Uptime
+- [ ] Package Number
+- [ ] ???
 
 ## Dependences
 Lua: https://www.lua.org/download.html
