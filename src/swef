@@ -347,8 +347,9 @@ end
     Ascii art time!
    =============== ]]
 
-local function ascii(info)
-    if info.os:lower():find("ubuntu") then
+local function ascii(osname)
+
+    if osname:lower():find("ubuntu") then
         local ascii = {
             colors.YELLOW .. "  /-".. colors.B_RED .."'-" .. colors.RED .. "( )       " .. colors.NOCOL,
             colors.B_RED .. "( )    |        " .. colors.NOCOL,
@@ -360,7 +361,7 @@ local function ascii(info)
         --   \-.-( )       
         --
         return ascii
-    elseif info.os:lower():find("arch") then
+    elseif osname:lower():find("arch") then
         local ascii = {
             colors.CYAN .. "   /\\           " .. colors.NOCOL,
             colors.CYAN .. "  /\\ \\          " .. colors.NOCOL,
@@ -368,11 +369,11 @@ local function ascii(info)
             colors.CYAN .. "/.'  '.\\        " .. colors.NOCOL
         }
         --    /\     
-        --   /  \  
+        --   /\ \  
         --  / .. \ 
         -- /.'  '.\
         return ascii
-    elseif info.os:lower():find("artix") then
+    elseif osname:lower():find("artix") then
         local ascii = {
             colors.CYAN .. "    /\\           " .. colors.NOCOL,
             colors.CYAN .. "   /_ \\          " .. colors.NOCOL,
@@ -384,7 +385,7 @@ local function ascii(info)
         --  /  '_\ 
         -- /.-'¯-.\
         return ascii
-    elseif info.os:lower():find("gentoo") then
+    elseif osname:lower():find("gentoo") then
         local ascii = {
             colors.B_GRAY .. " ,--.           " .. colors.NOCOL,
             colors.B_GRAY .. "( () \\          " .. colors.NOCOL,
@@ -396,7 +397,7 @@ local function ascii(info)
         --  `^  /          
         --   '~'           
         return ascii
-    elseif info.os:lower():find("fedora") then
+    elseif osname:lower():find("fedora") then
         local ascii = {
             colors.BLUE .. "   /¯¯\\         " .. colors.NOCOL,
             colors.BLUE .. " __|__          " .. colors.NOCOL,
@@ -408,7 +409,7 @@ local function ascii(info)
         -- /  T            
         -- \__/           
         return ascii
-    elseif info.os:lower():find("debian") then
+    elseif osname:lower():find("debian") then
         local ascii = {
             colors.RED .. "  _.._        " .. colors.NOCOL,
             colors.RED .. " (    |       " .. colors.NOCOL,
@@ -420,7 +421,7 @@ local function ascii(info)
         -- | (_/        
         --  \          
         return ascii
-    elseif info.os:lower():find("alpine") then
+    elseif osname:lower():find("alpine") then
         local ascii = {
             colors.BLUE .. " /¯¯¯¯¯¯\\       " .. colors.NOCOL,
             colors.BLUE .. "/  " .. colors.WHITE .. "/\\/\\" .. colors.BLUE .. "  \\      " .. colors.NOCOL,
@@ -432,7 +433,7 @@ local function ascii(info)
         -- \ /  \ \ /
         --  \______/
         return ascii
-    elseif info.os:lower():find("void") then
+    elseif osname:lower():find("void") then
         local ascii = {
             colors.B_GREEN .. "   .''-.        " .. colors.NOCOL,
             colors.GREEN .. "/'. " .. colors.B_GREEN .. "_'. \\       " .. colors.NOCOL,
@@ -444,7 +445,7 @@ local function ascii(info)
         --\ '.¯ './
         -- '-..'
         return ascii
-    elseif info.os:lower():find("slackware") then
+    elseif osname:lower():find("slackware") then
         local ascii = {
             colors.BLUE .. "   .___       " .. colors.NOCOL,
             colors.BLUE .. "   |___       " .. colors.NOCOL,
@@ -455,7 +456,32 @@ local function ascii(info)
         --   |___
         --   ___|
         -- |____
-    elseif info.os:lower():find("plan9") then -- No color because RC (Plan9's shell) does not support colors :(
+        return ascii
+    elseif osname:lower():find("nixos") then
+        local ascii = {
+            colors.BLUE .. "_\\_" .. colors.CYAN .. "\\/      " .. colors.NOCOL,
+            colors.CYAN .. "_/  \\/_    " .. colors.NOCOL,
+            colors.CYAN .. "/" .. colors.BLUE .. "\\" .. colors.CYAN .. "__" .. colors.BLUE .. "/" .. colors.CYAN .. "_     " .. colors.NOCOL,
+            colors.BLUE .. " /\\ " .. colors.CYAN .. "\\      " .. colors.NOCOL
+        }
+        -- _\_\/
+        -- _/  \/_
+        -- /\__/_
+        --  /\ \
+        return ascii
+    elseif osname:lower():find("manjaro") then
+        local ascii = {
+            colors.GREEN .. "|¯¯¯¯¯| |¯|    " .. colors.NOCOL,
+            colors.GREEN .. "| |¯¯¯  | |    " .. colors.NOCOL,
+            colors.GREEN .. "| | |¯| | |    " .. colors.NOCOL,
+            colors.GREEN .. "|_| |_| |_|    " .. colors.NOCOL
+        }
+        -- |¯¯¯¯¯| |¯|
+        -- | |¯¯¯  | |
+        -- | | |¯| | |
+        -- |_| |_| |_|
+        return ascii
+    elseif osname:lower():find("plan9") then -- No color because RC (Plan9's shell) does not support colors :(
         local ascii = {
             "  .-'_'-.        " ,
             " /  |_|  \\       ",
@@ -466,7 +492,8 @@ local function ascii(info)
         -- /  |_|  \
         -- \   _|  /
         --  '-. .-'
-    elseif info.os:lower():find("windows") then
+        return ascii
+    elseif osname:lower():find("windows") then
         local ascii = {
             colors.CYAN .. '|"""---....     ' .. colors.NOCOL,
             colors.CYAN .. '|____|____|     ' .. colors.NOCOL,
@@ -478,7 +505,7 @@ local function ascii(info)
         --|    T    |     
         --|...---"""'     
         return ascii
-    elseif info.os:lower():find("mac os") then -- This one's kinda ugly :(
+    elseif osname:lower():find("mac os") then -- This one's kinda ugly :(
         local ascii = {
             colors.RED    .. '  __()_         ' .. colors.NOCOL,
             colors.YELLOW .. ".'     '.       " .. colors.NOCOL,
@@ -490,7 +517,7 @@ local function ascii(info)
         -- |      (       
         -- '._____.'      
         return ascii
-    elseif info.os:lower():find("android") then
+    elseif osname:lower():find("android") then
         local ascii = {
             colors.GREEN .. '  \\  _  /     ' .. colors.NOCOL,
             colors.GREEN .. ' .-"" ""-.    ' .. colors.NOCOL,
@@ -502,7 +529,7 @@ local function ascii(info)
         -- /  O   O  \    
         -- |_________|    
         return ascii
-    elseif info.os:lower():find("haiku") then
+    elseif osname:lower():find("haiku") then
         local ascii = {
             colors.NOCOL .. "| |    |" .. colors.GREEN .. "." .. colors.NOCOL .. "|      " .. colors.NOCOL,
             colors.NOCOL .. "| |" .. colors.GREEN .."_-''.'" .. colors.NOCOL .. "|      " .. colors.NOCOL,
