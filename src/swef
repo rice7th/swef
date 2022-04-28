@@ -249,7 +249,7 @@ end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix-like" then
-        if isdir("/rc") and isdir("/bin/ape") and exists("/bin/ape/uname") then -- Is Plan9?
+        if exists_plan9("/bin/ape/uname") then -- Is Plan9?
             kernel = opencmd("/bin/ape/uname")
             local fetch = {
                 os = 'Plan9',
