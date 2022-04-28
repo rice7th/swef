@@ -66,6 +66,17 @@ local function isdir(path)
     return exists(path.."/")
 end
 
+local function existx_plan9(file9)
+    --[[
+    Basically this function does what exists() does but renames the files to something else,
+    instead of their original name. This because Lu9 (Lua for plan9/9Front native) returns the
+    same error of a file that does not exists if reanamed in the same name as it was... wtf why?
+    Well, at least the concept of root in Plan9/9Front is distorted, so if you rename a protected folder (such as /bin)
+    it WILL say that it exceeded renaming that file, but in reality it didn't. strange.
+    ]]
+    local ok, err = os.rename(file9, "somethingorplan9willreturnanerrorfuck")
+    return ok, err
+end
 
 -- Opens a command and returns the output
 local function opencmd(cmd)
