@@ -66,7 +66,7 @@ local function isdir(path)
     return exists(path.."/")
 end
 
-local function existx_plan_nine(file)
+local function plan_nine_exists(file)
     --[[
     Basically this function does what exists() does but renames the files to something else,
     instead of their original name. This because Lu9 (Lua for plan9/9Front native) returns the
@@ -74,7 +74,7 @@ local function existx_plan_nine(file)
     Well, at least the concept of root in Plan9/9Front is distorted, so if you rename a protected folder (such as /bin)
     it WILL say that it exceeded renaming that file, but in reality it didn't. strange.
     ]]
-    local ok, err = os.rename(file, "something_or_plan9_will_return_an_error_fuck")
+    local ok, err, code = os.rename(file, "something_or_plan9_will_return_an_error_fuck")
     return ok --, err
 end
 
@@ -171,8 +171,8 @@ local function linux_bsd_wm()
                 return wm or os.getenv("WAYLAND_DISPLAY") or error(":v")
             end
         else
-            -- Return unknown if there is a graphic session but the WM is not found
-            return "unknown"
+            -- Sometimes X11 does not set the XDG_SESSION_TYPEvariable, so this is a temporary fix
+            return opencmd([[xprop -id "$(xprop -root _NET_SUPPORTING_WM_CHECK | cut -d' ' -f5)" _NET_WM_NAME | cut -d'"' -f2]]) or "unknown"
         end
     else
         -- Graphic session is TTY or unknown
@@ -219,7 +219,7 @@ local function windows_wm()
             break
         end
     end
-    return wm or "explorer" or error("HOW")
+    return wm or "explorer" or error("HOW") -- Yes, explorer is the WM of windows. In fact, if you kill explorer you kill the GUI lmao
 end
 
 local function windows_version()
@@ -229,7 +229,7 @@ local function windows_version()
 end
 
 local function distro()
-    local distro_command = io.open("/etc/os-release", "r")
+    local distro_command = io.open("/etc/os-release", "r") -- I should check lsb_release first
     local distro_temp = distro_command:read("*a")
     distro_command:close()
     local distro = distro_temp:match("NAME.%W?%w+", 1):gsub('"', ''):gsub('NAME=', '')
@@ -249,7 +249,7 @@ end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix-like" then
-        if exists_plan_nine("/bin/ape/uname") then -- Is Plan9?
+        if plan_nine_exists("/bin/ape/uname") then -- Is Plan9?
             kernel = opencmd("/bin/ape/uname")
             local fetch = {
                 os = 'Plan9',
