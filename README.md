@@ -59,6 +59,19 @@ also note that you can move the batchfile into C:\Program Files\swef\ and it wil
 
 replace lua53 with your current lua version: e.g.  if you have lua 5.4 installed, replace `lua53` with `lua54`
 
+#### 9Front/Plan9
+I could not believe i've managed to do this...
+
+first, grab git. If you are on 9Front it is preinstalled, otherwise you should download [git9](https://github.com/oridb/git9) by Oridb.
+Next, install Lu9, Lua with full plan9/9front support. You can read the instructions [here](https://github.com/okvik/lu9)
+Finally, clone this repo and run:
+```
+git/clone https://github.com/jhonnyrice/swef/
+cd swef/src
+lu9 swef -n
+```
+Escape codes are not supported on plan9/9front, so make sure to run swef with the `-n` or the `--no-color` flag
+
 ## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
 
@@ -97,18 +110,23 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 ---
 - [x] FreeBSD (none, tty, none)
 
-Places to test:
-- [x] OtherBSDs
-- [ ] Older Windows versions
-- [ ] Plan 9 (Should work)
+---
+![9Front](https://user-images.githubusercontent.com/93940240/166825130-97a2dbde-3648-4d49-b835-1bebcd5f21e1.png)
 
-Places where it does NOT work:
+- [x] Plan9/9Front :v
+Places to test:
+- [x] NetBSD
+- [ ] OpenBSD
+- [ ] DragonflyBSD
+- [ ] HarveyOS
 - [ ] AIX
 - [ ] MINIX
 - [ ] IRIX
 - [ ] FreeMiNT
 - [ ] Inferno
 - [ ] BeOS (original)
+
+Places where it does NOT work:
 - [ ] Redox (?????)
 
 For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
