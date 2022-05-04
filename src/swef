@@ -605,7 +605,7 @@ if pcall(debug.getlocal, 4, 1) then return fetch() else -- Check if file is run 
     -- local art = ascii(info) -- Disabled HERE because if this is declared BEFORE -n | --no-color flag is checked this will be always colored
     -- Re-enabled on needed
     if not arg[1] then
-        local art = ascii(info)
+        local art = ascii(info.os)
         io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
         io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
         io.write(art[3] .. colors.GREEN  .. icons.kn_icon .. colors.NOCOL .. info.kn .. "\n")
