@@ -66,7 +66,7 @@ local function isdir(path)
     return exists(path.."/")
 end
 
-local function plan_nine_exists(file)
+local function plan_nine_exists(dir, file)
     --[[
     Basically this function does what exists() does but renames the files to something else,
     instead of their original name. This because Lu9 (Lua for plan9/9Front native) returns the
@@ -74,7 +74,8 @@ local function plan_nine_exists(file)
     Well, at least the concept of root in Plan9/9Front is distorted, so if you rename a protected folder (such as /bin)
     it WILL say that it exceeded renaming that file, but in reality it didn't. strange.
     ]]
-    local ok, err, code = os.rename(file, "something_or_plan9_will_return_an_error_fuck")
+    local ok, err, code = os.rename(dir..file, dir.."swefcache")
+    os.rename(dir.."swefcache", dir..file)
     return ok --, err
 end
 
@@ -249,7 +250,7 @@ end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix-like" then
-        if plan_nine_exists("/bin/ape/uname") then -- Is Plan9?
+        if plan_nine_exists("/bin/ape/", "uname") then -- Is Plan9?
             kernel = opencmd("/bin/ape/uname")
             local fetch = {
                 os = 'Plan9',
