@@ -652,7 +652,7 @@ if pcall(debug.getlocal, 4, 1) then return fetch() else -- Check if file is run 
             end
         end
         
-        local art = ascii(info)
+        local art = ascii(info.os)
 
         io.write(art[1] .. colors.RED    .. icons.os_icon .. colors.NOCOL .. info.os .. "\n")
         io.write(art[2] .. colors.YELLOW .. icons.wm_icon .. colors.NOCOL .. info.wm .. "\n")
