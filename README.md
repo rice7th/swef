@@ -114,6 +114,9 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 ![9Front](https://user-images.githubusercontent.com/93940240/166825130-97a2dbde-3648-4d49-b835-1bebcd5f21e1.png)
 
 - [x] Plan9/9Front :v
+
+---
+
 Places to test:
 - [x] NetBSD
 - [ ] OpenBSD
