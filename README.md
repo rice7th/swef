@@ -11,7 +11,7 @@ The Should Work Everywhere Fetch.
 
 Example of the fetch on ubuntu
 
-Written mainly in Lua, it is a generic fetch that works everywhere, even on windows, without emulating stuff exclusive to unix, such as bash.
+Written mainly in Lua, it is a generic fetch that works (nearly) everywhere, even on windows, without emulating shells or creating some weird compatibility layes.
 The only dependencies are Lua and xprop, but xprop is required only on x11 systems, meaning that you dont need it for android, MacOs, windows and wayland systems. Also Xprop is usually preinstalled, but double-checking never hurts :)
 
 ## Installation
@@ -23,7 +23,7 @@ Clone the repo if your system does not support LuaRocks, or if you are on Window
 ```
 git clone https://github.com/JhonnyRice/swef
 ```
-Then build it in these ways, depending on the system:
+Then ~~build~~ install it in these ways, depending on the system:
 
 #### Linux
 use the makefile:
@@ -70,7 +70,7 @@ git/clone https://github.com/jhonnyrice/swef/
 cd swef/src
 lu9 swef -n
 ```
-Escape codes are not supported on plan9/9front, so make sure to run swef with the `-n` or the `--no-color` flag
+Escape codes are not supported on plan9/9front, so make sure to run swef with the `-n` or the `--no-color` flag to avoid fancy issues.
 
 ## Effectiveness
 The fetch (as the name suggests) SHOULD work everywhere; These are the places where i tested it:
@@ -128,19 +128,22 @@ Places to test:
 - [ ] FreeMiNT
 - [ ] Inferno
 - [ ] BeOS (original)
+- [ ] OS/2
+- [ ] ArcaOS
+- [ ] AmigaOS
 
-Places where it does NOT work:
+Places where it does NOT work (or it should not):
 - [ ] Redox (?????)
 
 For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
 If your os is not supported (e.g. no ascii available or the os is not recognised) you can enjoy a cute cat art that changes breeed randomly as a replacement. If you REALLY want a new ascii art for your system, then please submit a github issue.
 ## Features
 - [x] OS name
-- [x] Window Manager ~(Non EWMH wm's are comin!)~ Non EWMH linux wm's are here, plus MacOS and Windows WM's support!
+- [x] Window Manager ~(Non EWMH wm's are comin!)~ Non EWMH linux wm's are here, plus MacOS, FreeMiNT and Windows WM's support!
 - [x] Kernel
-- [x] Shell ~(bugged :v)~ fixed 👌
+- [x] Shell 👌
 
-Maybe in the future:
+**Maybe** in the future:
 - [x] Hostname
 - [x] User
 - [x] CPU
@@ -153,7 +156,7 @@ Maybe in the future:
 ## Dependences
 Lua: https://www.lua.org/download.html
 
-xprop (dunno)
+xprop (only for X11 systems, e.g. Linux w/ X11, FreeBSD, NetBSD, OpenBSD, Minix etc)
 
 Thats it.
 

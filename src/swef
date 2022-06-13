@@ -272,7 +272,7 @@ local function fetch()
                 if os_name:lower() == "android" then
                     local fetch = {
                         os = "Android",
-                        wm = "AndroidWM",
+                        wm = "SurfaceFlinger", -- Apparently this is the window system's name, sooo...
                         kn = kern .. " " .. kern_release,
                         sh = shell()
                     }
