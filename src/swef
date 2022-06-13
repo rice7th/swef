@@ -472,7 +472,7 @@ local function ascii(osname)
     elseif osname:lower():find("nixos") then
         local ascii = {
             colors.BLUE .. "_\\_" .. colors.CYAN .. "\\/      " .. colors.NOCOL,
-            colors.CYAN .. "_/  \\/_    " .. colors.NOCOL,
+            colors.CYAN .. "_/  \\".. colors.BLUE .. "/_    " .. colors.NOCOL,
             colors.CYAN .. "/" .. colors.BLUE .. "\\" .. colors.CYAN .. "__" .. colors.BLUE .. "/" .. colors.CYAN .. "_     " .. colors.NOCOL,
             colors.BLUE .. " /\\ " .. colors.CYAN .. "\\      " .. colors.NOCOL
         }
