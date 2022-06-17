@@ -322,6 +322,14 @@ local function fetch()
                     sh = shell()
                 }
                 return fetch
+            elseif kern:lower():find("morphos") then -- MorphOS, aka Amiga Next Generation
+                local fetch = {
+                    os = "MorphOS",
+                    wm = "default",
+                    kn = kern .. " " .. kern_release,
+                    sh = "shell"
+                }
+                return fetch
             else
                 local fetch = {
                     os = "You've defeated me...",
@@ -552,6 +560,18 @@ local function ascii(osname)
         --| |_-''.'|      
         --|.-__-'| |      
         --| |    | |      
+        return ascii
+    elseif osname:lower():find("morphos") then
+        local ascii = {
+            colors.BLUE .. " __ \\/ __      " .. colors.NOCOL,
+            colors.BLUE .. "/o \\{}/ o\\     " .. colors.NOCOL,
+            colors.BLUE .. "\\   ()   /     " .. colors.NOCOL,
+            colors.BLUE .. " (o/\\/\\o)      " .. colors.NOCOL
+        }
+        --  __ \/ __      
+        -- /o \{}/ o\     
+        -- \   ()   /     
+        --  (o/\/\o)      
         return ascii
 
     else -- AKA unknown / Not supported yet
