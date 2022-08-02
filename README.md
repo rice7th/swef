@@ -131,7 +131,7 @@ Places to test:
 - [ ] OS/2
 - [ ] ArcaOS
 - [ ] AmigaOS
-
+- [x] MorphOS
 Places where it does NOT work (or it should not):
 - [ ] Redox (?????)
 
