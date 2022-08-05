@@ -220,7 +220,8 @@ local function windows_wm()
             break
         end
     end
-    return wm or "explorer" or error("HOW") -- Yes, explorer is the WM of windows. In fact, if you kill explorer you kill the GUI lmao
+    return wm or --[["explorer"]] "desktopwm" or error("HOW") --[[ Yes, explorer is the WM of windows. In fact, if you kill explorer you kill the GUI lmao.
+    BUT it's GUI functionality is called dwm, desktop window manager, not to be confused with dwm, the dynamic window manager on linux ]]
 end
 
 local function windows_version()
