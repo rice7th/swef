@@ -56,6 +56,7 @@ local icons = {
 
 
 --[[ STOLEN FROM:: https://stackoverflow.com/a/40195356]]
+--[[ DEPRECATED.
 -- Checks if a file exist
 local function exists(file)
     local ok, err, code = os.rename(file, file)
@@ -73,10 +74,24 @@ local function plan_nine_exists(dir, file)
     same error of a file that does not exists if reanamed in the same name as it was... wtf why?
     Well, at least the concept of root in Plan9/9Front is distorted, so if you rename a protected folder (such as /bin)
     it WILL say that it exceeded renaming that file, but in reality it didn't. strange.
-    ]]
+    ] ]
     local ok, err, code = os.rename(dir..file, dir.."swefcache")
     os.rename(dir.."swefcache", dir..file)
     return ok --, err
+end
+]]
+
+--[[ USE THIS INSTEAD ]]
+function exists(name)
+    --[[
+    This function should work for every file, even on Plan9, since it is trying to open that file. No renaming or weird stuff.
+    Unfortunately this method only works on files, not folders, for that use the old method.
+    ]]
+   local f = io.open(name, "r")
+   if f ~= nil then
+        io.close(f)
+        return true
+    else return false end
 end
 
 -- Opens a command and returns the output
@@ -251,7 +266,8 @@ end
 local function fetch()
     local os_type = os_family()
     if os_type == "unix-like" then
-        if plan_nine_exists("/bin/ape/", "uname") then -- Is Plan9?
+        -- if plan_nine_exists("/bin/ape/", "uname") then -- plan_nine_exists is deprecated. Use exists.
+        if exists("/bin/ape/uname") then 
             kernel = opencmd("/bin/ape/uname")
             local fetch = {
                 os = 'Plan9',
@@ -289,7 +305,7 @@ local function fetch()
                     return fetch
                 end
 
-            elseif kern:lower() == "darwin" then -- MacOS family
+            elseif kern:lower() == "darwin" then -- MacOS/iOS/iPadOS family.  In the future i might add something more like iOS/iPadOS support
                 local fetch = {
                     os = "Mac Os",
                     wm = macos_wm(),
