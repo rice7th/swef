@@ -239,13 +239,13 @@ local function distro()
 end
 
 local function shell()
-    local is_the_global_variable_set = os.getenv("SHELL")
-    if not is_the_global_variable_set then
+    local shell = os.getenv("SHELL")
+    if not shell then -- if it is not set
         return "sh"
     elseif exists("/usr/bin/basename") then
         return opencmd("basename $SHELL")
     else
-        return "sh"
+        return shell
     end
 end
 local function fetch()
