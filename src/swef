@@ -308,7 +308,7 @@ local function fetch()
                 return fetch
             elseif kern:lower():find("bsd") then -- BSDs (FreeBSD, OpenBSD, NetBSD etc...). They work similarly to Linux
                 local fetch = {
-                    os = os_name,
+                    os = kern, -- well, that's it after all
                     wm = linux_bsd_wm(),
                     kn = kern .. " " .. kern_release,
                     sh = shell()
@@ -573,6 +573,18 @@ local function ascii(osname)
         -- /o \{}/ o\     
         -- \   ()   /     
         --  (o/\/\o)      
+        return ascii
+    elseif osname:lower():find("netbsd") then
+        local ascii = {
+            colors.GRAY .. "\\" .. colors.yellow .. "--___   _. " .. colors.NOCOL,
+            colors.GRAY .. " \\" .. colors.yellow .. "  __'\"'_/ " .. colors.NOCOL,
+            colors.GRAY .. "  \\" .. colors.yellow .. "\"  '\"'   " .. colors.NOCOL,
+            colors.GRAY .. "   \\        " .. colors.NOCOL
+        }
+        -- \--___   _.
+        --  \  __'"'_/
+        --   \"  '"'
+        --    \
         return ascii
 
     else -- AKA unknown / Not supported yet
