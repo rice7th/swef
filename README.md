@@ -11,7 +11,7 @@ The Should Work Everywhere Fetch.
 
 Example of the fetch on ubuntu
 
-Written mainly in Lua, SWEF is a generic fetch that works (nearly) everywhere, even on windows, without emulating shells or using some weird compatibility layes.
+Written mainly in Lua, SWEF is a generic system fetch that works (nearly) everywhere, even on windows, without emulating shells or using some weird compatibility layes.
 The only dependencies are Lua (5.1+) and xprop, but xprop is required only on X11 systems, meaning that you dont need it for android, MacOs, windows and wayland systems. Also Xprop is usually preinstalled on X11 systems, but double-checking never hurts :)
 
 ## Installation
@@ -138,8 +138,9 @@ Places to test:
 
 
 Places where it does NOT work (or it should not):
-- [ ] Redox (?????)
+- [ ] Redox (we have hope since we have an actual rust lua interpreter)
 - [ ] BlackBerry OS
+- [ ] TempleOS (unless someone writes a lua interpreter in holyc i dont see that coming)
 
 For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
 If your os is not supported (e.g. no ascii available or the os is not recognised) you can enjoy a cute cat art that changes breeed randomly as a replacement. If you REALLY want a new ascii art for your system, then please submit a github issue.
