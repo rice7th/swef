@@ -37,7 +37,11 @@ again use the makefile:
 sudo make install
 ```
 #### Android
+Make sure to use Termux.
 ```
+pkg install lua # or luajit
+git clone https://github.com/JhonnyRice/swef/
+cd swef
 chmod +x src/swef
 cp src/swef /data/data/com.termux/files/usr/bin
 ```
