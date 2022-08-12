@@ -15,11 +15,13 @@ Written mainly in Lua, SWEF is a generic system fetch that works (nearly) everyw
 The only dependencies are Lua (5.1+) and xprop, but xprop is required only on X11 systems, meaning that you dont need it for android, MacOs, windows and wayland systems. Also Xprop is usually preinstalled on X11 systems, but double-checking never hurts :)
 
 ## Installation
-Download the package (Linux/MacOS only):
+<!--
+Download the package from luarocks 
 ```
 luarocks install swef
 ```
-Clone the repo if your system does not support LuaRocks, or if you are on Windows:
+-->
+Clone the repo:
 ```
 git clone https://github.com/JhonnyRice/swef
 ```
