@@ -592,9 +592,9 @@ local function ascii(osname)
         return ascii
     elseif osname:lower():find("netbsd") then
         local ascii = {
-            colors.GRAY .. "\\" .. colors.yellow .. "--___   _. " .. colors.NOCOL,
-            colors.GRAY .. " \\" .. colors.yellow .. "  __'\"'_/ " .. colors.NOCOL,
-            colors.GRAY .. "  \\" .. colors.yellow .. "\"  '\"'   " .. colors.NOCOL,
+            colors.GRAY .. "\\" .. colors.YELLOW .. "--___   _. " .. colors.NOCOL,
+            colors.GRAY .. " \\" .. colors.YELLOW .. "  __'\"'_/ " .. colors.NOCOL,
+            colors.GRAY .. "  \\" .. colors.YELLOW .. "\"  '\"'   " .. colors.NOCOL,
             colors.GRAY .. "   \\        " .. colors.NOCOL
         }
         -- \--___   _.
