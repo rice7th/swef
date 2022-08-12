@@ -64,7 +64,7 @@ I could not believe i've managed to do this...
 
 first, grab git. If you are on 9Front it is preinstalled, otherwise you should download [git9](https://github.com/oridb/git9) by Oridb.
 Next, install Lu9, Lua with full plan9/9front support. You can read the instructions [here](https://github.com/okvik/lu9)
-Finally, clone this repo and run:
+Finally, clone this repo and run swef:
 ```
 git/clone https://github.com/jhonnyrice/swef/
 cd swef/src
@@ -117,10 +117,22 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 
 ---
 
-Places to test:
+#### Tested and supported platforms:
+- [x] Windows
+- [x] MacOS
+- [x] Linux: both GNU and Busybox and both GLibC and Musl
+- [x] Android (requires Termux)
+- [x] Haiku
+- [x] Plan9
+- [x] 9Front
+- [x] FreeBSD (no ascii tho)
 - [x] NetBSD
+
+#### Platforms where it should work:
+a checked box means there is support but it has not been tested at all.
 - [ ] OpenBSD
 - [ ] DragonflyBSD
+- [ ] MidnightBSD
 - [ ] HarveyOS
 - [ ] AIX
 - [ ] MINIX
@@ -137,12 +149,12 @@ Places to test:
 - [ ] iPadOS (same as iOS)
 
 
-Places where it does NOT work (or it should not):
+#### Platforms where it does NOT work (or it should not):
 - [ ] Redox (we have hope since we have an actual rust lua interpreter)
 - [ ] BlackBerry OS
 - [ ] TempleOS (unless someone writes a lua interpreter in holyc i dont see that coming)
 
-For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled everywhere.
+For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled nearly everywhere, with some patches.
 If your os is not supported (e.g. no ascii available or the os is not recognised) you can enjoy a cute cat art that changes breeed randomly as a replacement. If you REALLY want a new ascii art for your system, then please submit a github issue.
 ## Features
 - [x] OS name
