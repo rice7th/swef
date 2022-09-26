@@ -268,7 +268,7 @@ local function fetch()
     if os_type == "unix-like" then
         -- if plan_nine_exists("/bin/ape/", "uname") then -- plan_nine_exists is deprecated. Use exists.
         if exists("/bin/ape/uname") then 
-            kernel = opencmd("/bin/ape/uname")
+            kernel = opencmd("/bin/ape/uname -r")
             local fetch = {
                 os = 'Plan9',
                 wm = 'rio',
