@@ -3,8 +3,8 @@
 The Should Work Everywhere Fetch.
 
 ![Maintenance](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/jhonnyrice/swef?style=for-the-badge)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/jhonnyrice/swef?style=for-the-badge)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/rice7th/swef?style=for-the-badge)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/rice7th/swef?style=for-the-badge)
 
 
 ![image](https://user-images.githubusercontent.com/93940240/152065374-8f0b0ede-d2d7-4d94-a502-4368cd1eee56.png)
@@ -23,7 +23,7 @@ luarocks install swef
 -->
 Clone the repo:
 ```
-git clone https://github.com/JhonnyRice/swef
+git clone https://github.com/rice7th/swef
 ```
 Then ~~build~~ install it in these ways, depending on the system:
 
@@ -42,7 +42,7 @@ sudo make install
 Make sure to use Termux.
 ```
 pkg install lua # or luajit
-git clone https://github.com/JhonnyRice/swef/
+git clone https://github.com/rice7th/swef/
 cd swef
 chmod +x src/swef
 cp src/swef /data/data/com.termux/files/usr/bin
@@ -72,7 +72,7 @@ first, grab git. If you are on 9Front it is preinstalled, otherwise you should d
 Next, install Lu9, Lua with full plan9/9front support. You can read the instructions [here](https://github.com/okvik/lu9)
 Finally, clone this repo and run swef:
 ```
-git/clone https://github.com/jhonnyrice/swef/
+git/clone https://github.com/rice7th/swef/
 cd swef/src
 lu9 swef -n
 ```
