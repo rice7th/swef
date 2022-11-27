@@ -97,6 +97,10 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 
 - [x] Void Linux (none, x11, AwesomeWM)
 ---
+![Arch Linux](https://imgur.com/a/wng4AIa)
+
+- [x] Arch Linux (Gnome, x11, AwesomeWM)
+---
 ![Windows 10](https://i.imgur.com/BVvqYSv.png)
 
 - [x] Windows 10 Pro (Metro, ??, Explorer)
