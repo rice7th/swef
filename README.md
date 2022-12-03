@@ -144,7 +144,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] SerenityOS
 
 #### Platforms where it should work:
-a checked box means there is support but it has not been tested at all.
+a checked box means there is support and someone made it work, but it has not been tested at all.
 - [ ] OpenBSD
 - [ ] DragonflyBSD
 - [ ] MidnightBSD
@@ -161,6 +161,7 @@ a checked box means there is support but it has not been tested at all.
 - [x] MorphOS
 - [ ] iOS (via OpenTerm i guess?)
 - [ ] iPadOS (same as iOS)
+- [ ] HelenOS
 
 
 #### Platforms where it does NOT work (or it should not):
