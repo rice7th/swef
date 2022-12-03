@@ -97,7 +97,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 
 - [x] Void Linux (none, x11, AwesomeWM)
 ---
-![Arch Linux](https://imgur.com/a/wng4AIa)
+![Arch Linux](https://user-images.githubusercontent.com/93940240/205457800-05cb49c8-70fb-4d13-9071-b2d0cc898166.png)
 
 - [x] Arch Linux (Gnome, x11, AwesomeWM)
 ---
@@ -126,6 +126,10 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] Plan9/9Front :v
 
 ---
+![SerenityOS](https://user-images.githubusercontent.com/93940240/205457814-75907206-a223-4580-ba52-a64a4f70870a.png)
+
+- [x] SerenityOS
+---
 
 #### Tested and supported platforms:
 - [x] Windows
@@ -137,6 +141,7 @@ The fetch (as the name suggests) SHOULD work everywhere; These are the places wh
 - [x] 9Front
 - [x] FreeBSD (no ascii tho)
 - [x] NetBSD
+- [x] SerenityOS
 
 #### Platforms where it should work:
 a checked box means there is support but it has not been tested at all.
@@ -154,7 +159,6 @@ a checked box means there is support but it has not been tested at all.
 - [ ] ArcaOS
 - [ ] AmigaOS
 - [x] MorphOS
-- [ ] SerenityOS
 - [ ] iOS (via OpenTerm i guess?)
 - [ ] iPadOS (same as iOS)
 
@@ -164,7 +168,13 @@ a checked box means there is support but it has not been tested at all.
 - [ ] BlackBerry OS
 - [ ] TempleOS (unless someone writes a lua interpreter in holyc i dont see that coming)
 
-For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C, meaning that it can be compiled nearly everywhere, with some patches.
+#### Platforms where i have NO IDEA if swef works
+- [ ] Vinix (there is VLua and GCC 12 with MLibC was ported, but i am not completely sure it'll work lol)
+- [ ] KolibriOS
+- [ ] Managram (Maybe? Their LibC (mLibC) seems good enough for Lua)
+- [ ] GhostOS
+
+For the rest it should work fine on tons of platforms. At least where Lua is supported, and Lua is built in ANSI C (C89), meaning that it can be compiled nearly everywhere, with some patches.
 If your os is not supported (e.g. no ascii available or the os is not recognised) you can enjoy a cute cat art that changes breeed randomly as a replacement. If you REALLY want a new ascii art for your system, then please submit a github issue.
 ## Features
 - [x] OS name
