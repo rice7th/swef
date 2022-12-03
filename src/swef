@@ -615,7 +615,7 @@ local function ascii(osname)
             colors.RED .. "  ." .. colors.BLACK .. "-'¯'-.  " .. colors.NOCOL,
             colors.RED .. " /" .. colors.BLACK .. "." .. colors.RED .. "\\_" .. colors.BLACK .."    \\ " .. colors.NOCOL,
             colors.RED .. " \\ ".. colors.BLACK .. "o" .. colors.RED .. " " .. colors.BLACK .. "_".. colors.RED .. "¯\\" .. colors.BLACK .. " / " .. colors.NOCOL,
-            colors.RED .. "  '-." colors.BLACK .. "¯" .. colors.RED .. ".-" .. colors.RED .. "'  " .. colors.NOCOL,
+            colors.RED .. "  '-." .. colors.BLACK .. "¯" .. colors.RED .. ".-" .. colors.RED .. "'  " .. colors.NOCOL,
         }
         --  .-'¯'-.  
         -- /.\_    \ 
