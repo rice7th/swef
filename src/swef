@@ -613,8 +613,8 @@ local function ascii(osname)
     elseif osname:lower():find("serenityos") then
         local ascii = {
             colors.RED .. "  ." .. .. "-'¯'-.  " colors.NOCOL,
-            colors.RED .. " /.\\_" .. colors.BLACK .."    \ " .. colors.NOCOL,
-            colors.RED .. " \ o _¯\\" .. colors.BLACK .. " / " .. colors.NOCOL,
+            colors.RED .. " /.\\_" .. colors.BLACK .."    \\ " .. colors.NOCOL,
+            colors.RED .. " \\ o _¯\\" .. colors.BLACK .. " / " .. colors.NOCOL,
             colors.RED .. "  '-.¯.-'  " .. colors.NOCOL,
         }
         --  .-'¯'-.  
