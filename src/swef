@@ -350,7 +350,7 @@ local function fetch()
             elseif kern:lower():find("serenityos") then -- SerenityOS, aka the best os ever made
                 local fetch = {
                     os = "SerenityOS",
-                    wm = "serenityos' windowing system",
+                    wm = "SerenityOS' windowing system",
                     kn = kern .. " " .. kern_release,
                     sh = "Serenity Shell"
                 }
