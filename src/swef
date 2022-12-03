@@ -347,6 +347,14 @@ local function fetch()
                     sh = "shell"
                 }
                 return fetch
+            elseif kern:lower():find("serenityos") then -- SerenityOS, aka the best os ever made
+                local fetch = {
+                    os = "SerenityOS",
+                    wm = "serenityos' windowing system",
+                    kn = kern .. " " .. kern_release,
+                    sh = "Serenity Shell"
+                }
+                return fetch
             else
                 local fetch = {
                     os = "You've defeated me...",
@@ -602,7 +610,18 @@ local function ascii(osname)
         --   \"  '"'
         --    \
         return ascii
-
+    elseif osname:lower():find("serenityos") then
+        local ascii = {
+            colors.RED .. "  ." .. .. "-'¯'-.  " colors.NOCOL,
+            colors.RED .. " /.\\_" .. colors.BLACK .."    \ " .. colors.NOCOL,
+            colors.RED .. " \ o _¯\\" .. colors.BLACK .. " / " .. colors.NOCOL,
+            colors.RED .. "  '-.¯.-'  " .. colors.NOCOL,
+        }
+        --  .-'¯'-.  
+        -- /.\_    \ 
+        -- \ o _¯\ / 
+        --  '-.¯.-'  
+        return ascii
     else -- AKA unknown / Not supported yet
         math.randomseed(os.time())
         randomness = math.random()
